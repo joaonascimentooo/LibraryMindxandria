@@ -1,21 +1,18 @@
 # Root-level Dockerfile to build backend from monorepo
-# Stage 1: Build with Maven
+# Stage 1: Build with Maven (use Maven from image instead of wrapper)
 FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /workspace
 
-# Copy Maven wrapper and pom for dependency caching
-COPY backend/pom.xml backend/mvnw backend/.mvn/ ./backend/
+# Copy POM first to leverage Docker layer caching
+COPY backend/pom.xml ./backend/pom.xml
 
-# Ensure wrapper is executable (no-op on Windows)
-RUN chmod +x backend/mvnw || true
+# Pre-fetch dependencies (no wrapper needed)
+RUN mvn -f backend/pom.xml dependency:go-offline -B
 
-# Download dependencies
-RUN ./backend/mvnw -f backend/pom.xml dependency:go-offline -B
-
-# Copy source and build
+# Copy the source and build
 COPY backend/src ./backend/src
-RUN ./backend/mvnw -f backend/pom.xml clean package -DskipTests
+RUN mvn -f backend/pom.xml clean package -DskipTests
 
 # Stage 2: Runtime image
 FROM eclipse-temurin:21-jre-alpine
