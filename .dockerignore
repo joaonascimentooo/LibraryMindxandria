@@ -1,0 +1,11 @@
+# Ignore everything that isn't needed for backend build
+**/.git
+**/.gitignore
+**/.github
+**/.vscode
+**/.idea
+**/target
+**/node_modules
+frontend/
+.DS_Store
+Thumbs.db
