@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -59,8 +60,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Ajuste as origens conforme seu ambiente (ex.: http://localhost:3000 para o Next.js)
-        configuration.addAllowedOriginPattern("http://localhost:3000");
+    // Allow local dev and Vercel preview/prod domains
+    configuration.setAllowedOriginPatterns(
+        Arrays.asList(
+            "http://localhost:3000",
+            "https://*.vercel.app"
+        )
+    );
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
