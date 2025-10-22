@@ -60,7 +60,6 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-    // Allow local dev and Vercel preview/prod domains
     configuration.setAllowedOriginPatterns(
         Arrays.asList(
             "http://localhost:3000",

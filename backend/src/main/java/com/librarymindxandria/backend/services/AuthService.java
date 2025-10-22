@@ -72,7 +72,6 @@ public class AuthService {
                     Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), null, new ArrayList<>());
                     String newAccessToken = tokenProvider.generateAccessToken(authentication);
 
-                    // Esta chamada também precisa de uma transação
                     RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user.getId());
                     return new TokenResponseDTO(newAccessToken, newRefreshToken.getToken());
                 })
