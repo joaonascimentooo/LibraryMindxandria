@@ -71,6 +71,19 @@ public class BookService {
         Book updatedBook = bookRepository.save(bookToUpdate);
         return mapBookToDTO(updatedBook);
     }
+
+    @Transactional
+    public void deleteMyBook(String bookId){
+        User currentUser = userService.getAuthenticatedUserEntity();
+
+        Book bookToDelete = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+
+        if (!bookToDelete.getUser().getId().equals(currentUser.getId())){
+            throw new AccessDeniedException("Você não tem permissão para deletar este livro");
+        }
+        bookRepository.delete(bookToDelete);
+    }
     private BookResponseDTO mapBookToDTO(Book book) {
         BookResponseDTO responseDTO = new BookResponseDTO();
         responseDTO.setId(book.getId());

@@ -33,4 +33,10 @@ public class BookController {
             @RequestBody BookUpdateRequestDTO updateRequestDTO){
         return ResponseEntity.ok(bookService.uploadMyBook(id,updateRequestDTO));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMyBook(@PathVariable String id){
+        bookService.deleteMyBook(id);
+        return ResponseEntity.noContent().build();
+    }
 }
