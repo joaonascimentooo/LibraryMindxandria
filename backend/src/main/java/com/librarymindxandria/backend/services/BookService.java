@@ -91,6 +91,7 @@ public class BookService {
         responseDTO.setName(book.getName());
         responseDTO.setShortDescription(book.getShortDescription());
         responseDTO.setLongDescription(book.getLongDescription());
+        responseDTO.setGenreType(book.getGenreTypes());
         return responseDTO;
     }
 }
