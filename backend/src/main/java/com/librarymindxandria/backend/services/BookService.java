@@ -8,6 +8,8 @@ import com.librarymindxandria.backend.models.User;
 import com.librarymindxandria.backend.repositories.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +34,15 @@ public class BookService {
                 .toList();
     }
 
-    public List<BookResponseDTO> getAllBooks(){
-        List<Book> books = bookRepository.findAll();
-        return books.stream()
-                .map(this::mapBookToDTO)
-                .toList();
+    public Page<BookResponseDTO> getAllBooks(String searchTerm, Pageable pageable){
+        Page<Book> booksPage;
+
+        if (searchTerm == null|| searchTerm.isBlank()){
+            booksPage = bookRepository.findAll(pageable);
+        }else {
+            booksPage = bookRepository.searchBooks(searchTerm,pageable);
+        }
+        return booksPage.map(this::mapBookToDTO);
     }
 
     @Transactional

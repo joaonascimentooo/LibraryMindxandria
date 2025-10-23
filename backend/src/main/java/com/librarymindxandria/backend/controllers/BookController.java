@@ -6,6 +6,8 @@ import com.librarymindxandria.backend.models.BookResponseDTO;
 import com.librarymindxandria.backend.services.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,12 @@ public class BookController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<BookResponseDTO>> getAllBooks(){
-        List<BookResponseDTO> allBooks = bookService.getAllBooks();
-        return ResponseEntity.ok(allBooks);
+    public ResponseEntity<Page<BookResponseDTO>> getAllBooks(
+            @RequestParam(required = false) String search,
+            Pageable pageable) {
+
+        Page<BookResponseDTO> bookPage = bookService.getAllBooks(search, pageable);
+        return ResponseEntity.ok(bookPage);
     }
 
     @PostMapping("/upload")
