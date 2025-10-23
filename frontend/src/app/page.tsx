@@ -1,5 +1,3 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import SearchBar from '@/components/SearchBar';
 import BookCard from '@/components/BookCard';
 
@@ -54,10 +52,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      
-      <main className="flex-1">
+    <>
+      <main>
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-[#1a120a] to-[#0f0a05] py-20 px-4">
           <div className="max-w-7xl mx-auto text-center">
@@ -142,8 +138,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </div>
+    </>
   );
 }

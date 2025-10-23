@@ -1,0 +1,12 @@
+package com.librarymindxandria.backend.dtos;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class BookUpdateRequestDTO {
+    private String name;
+    private String shortDescription;
+    private String longDescription;
+}

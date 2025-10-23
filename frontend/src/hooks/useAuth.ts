@@ -49,7 +49,12 @@ export function useAuth() {
 
     // Revalidar quando o localStorage mudar (ex.: login em outra aba)
     window.addEventListener("storage", checkAuth);
-    return () => window.removeEventListener("storage", checkAuth);
+    // Revalidar quando houver mudança de auth na mesma aba
+    window.addEventListener("auth-change", checkAuth);
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+      window.removeEventListener("auth-change", checkAuth);
+    };
   }, []);
 
   const logout = () => {

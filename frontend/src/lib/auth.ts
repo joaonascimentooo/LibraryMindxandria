@@ -2,6 +2,7 @@ export function setTokens(accessToken: string | null, refreshToken: string | nul
   if (typeof window === "undefined") return;
   if (accessToken) localStorage.setItem("accessToken", accessToken);
   if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+  window.dispatchEvent(new Event("auth-change"));
 }
 
 export function getAccessToken(): string | null {
@@ -18,4 +19,5 @@ export function clearTokens() {
   if (typeof window === "undefined") return;
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+  window.dispatchEvent(new Event("auth-change"));
 }
