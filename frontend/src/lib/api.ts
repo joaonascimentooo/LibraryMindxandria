@@ -114,6 +114,14 @@ export async function updateProfile(payload: { name: string }): Promise<UserResp
   return (await res.json()) as UserResponseDTO;
 }
 
+export async function deleteAccount(): Promise<void> {
+  const res = await fetchWithAuth(`${API_URL}/users`, { method: "DELETE" });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Não foi possível excluir a conta.");
+  }
+}
+
 export async function updateBook(id: string, payload: BookRequestDTO): Promise<BookResponseDTO> {
   const res = await fetchWithAuth(`${API_URL}/books/${id}`, {
     method: "PUT",

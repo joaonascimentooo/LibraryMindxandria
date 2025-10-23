@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMyProfile, getMyBooks, updateProfile, refreshToken, type UserResponseDTO, type BookResponseDTO } from "@/lib/api";
+import { getMyProfile, getMyBooks, updateProfile, deleteAccount, refreshToken, type UserResponseDTO, type BookResponseDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { getRefreshToken, setTokens } from "@/lib/auth";
 
 export default function ProfilePage() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, logout } = useAuth();
   const [profile, setProfile] = useState<UserResponseDTO | null>(null);
   const [books, setBooks] = useState<BookResponseDTO[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -16,6 +16,10 @@ export default function ProfilePage() {
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState("");
   const [savingName, setSavingName] = useState(false);
+
+  // Exclusão de conta
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -35,6 +39,22 @@ export default function ProfilePage() {
     };
     load();
   }, [isAuthenticated]);
+
+  const onDeleteAccount = async () => {
+    try {
+      setDeleting(true);
+      setError(null);
+      await deleteAccount();
+      // usa o logout do hook para limpar tokens e redirecionar
+      logout();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
+    } finally {
+      setDeleting(false);
+      setConfirmDelete(false);
+    }
+  };
 
   const onSaveName = async () => {
     if (!profile) return;
@@ -165,6 +185,44 @@ export default function ProfilePage() {
                   </li>
                 ))}
               </ul>
+            )}
+          </div>
+        </section>
+
+        {/* Danger Zone */}
+        <section className="mt-8">
+          <h2 className="text-2xl font-semibold text-red-400 mb-4">Zona de Perigo</h2>
+          <div className="bg-[#1a120a] border border-red-700 rounded-lg p-6">
+            <p className="text-[#e8dcc8] mb-4">
+              Excluir sua conta é uma ação permanente e não pode ser desfeita.
+            </p>
+            {!confirmDelete ? (
+              <button
+                onClick={() => { setConfirmDelete(true); setError(null); setSuccess(null); }}
+                className="bg-red-700 text-white px-4 py-2 rounded font-semibold hover:bg-red-800 transition-all"
+              >
+                🗑️ Excluir minha conta
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <p className="text-[#cbbba2]">Tem certeza que deseja prosseguir?</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={onDeleteAccount}
+                    disabled={deleting}
+                    className="bg-red-700 text-white px-4 py-2 rounded font-semibold hover:bg-red-800 transition-all disabled:opacity-60"
+                  >
+                    {deleting ? "Excluindo..." : "Sim, excluir"}
+                  </button>
+                  <button
+                    onClick={() => setConfirmDelete(false)}
+                    disabled={deleting}
+                    className="bg-[#2a1e13] text-[#e8dcc8] px-4 py-2 rounded border border-[#8b6f47] hover:bg-[#3a2e23] transition-all disabled:opacity-60"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </section>
