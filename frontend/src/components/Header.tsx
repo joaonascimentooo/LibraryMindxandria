@@ -79,6 +79,13 @@ export default function Header() {
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-[#1a120a] border border-[#8b6f47] rounded-lg shadow-lg py-2 z-50">
                     <Link
+                      href="/my-books"
+                      className="block px-4 py-2 text-[#e8dcc8] hover:bg-[#2a1e13] hover:text-[#c9a961] transition-colors"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      📚 Meus Livros
+                    </Link>
+                    <Link
                       href="/profile"
                       className="block px-4 py-2 text-[#e8dcc8] hover:bg-[#2a1e13] hover:text-[#c9a961] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
@@ -172,6 +179,13 @@ export default function Header() {
                         <p className="text-[#9b8c78] text-xs">{user?.email}</p>
                       </div>
                     </div>
+                    <Link
+                      href="/my-books"
+                      className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2 px-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      📚 Meus Livros
+                    </Link>
                     <Link
                       href="/profile"
                       className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2 px-2"

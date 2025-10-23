@@ -100,3 +100,28 @@ export async function getMyBooks(): Promise<BookResponseDTO[]> {
   }
   return (await res.json()) as BookResponseDTO[];
 }
+
+export async function updateBook(id: string, payload: BookRequestDTO): Promise<BookResponseDTO> {
+  const res = await fetchWithAuth(`${API_URL}/books/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Erro ao atualizar livro.");
+  }
+  return (await res.json()) as BookResponseDTO;
+}
+
+export async function deleteBook(id: string): Promise<void> {
+  const res = await fetchWithAuth(`${API_URL}/books/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Erro ao deletar livro.");
+  }
+}
