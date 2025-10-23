@@ -41,6 +41,7 @@ public class BookService {
         newBook.setName(requestDTO.getName());
         newBook.setShortDescription(requestDTO.getShortDescription());
         newBook.setLongDescription(requestDTO.getLongDescription());
+        newBook.setGenreTypes(requestDTO.getGenreType());
         newBook.setCreatedAt(LocalDateTime.now());
         newBook.setUser(user);
 

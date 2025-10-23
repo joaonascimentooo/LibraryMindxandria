@@ -9,22 +9,15 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table(name = "authors")
 @Getter
 @Setter
-public class Book extends Auditable {
+public class Author extends Auditable {
 
     private String name;
-
-    @Column(name = "short_description", length = 500)
-    private String shortDescription;
-
-    @Column(name = "long_description", length = 3000)
-    private String longDescription;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private String email;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private List<GenreType> genreTypes;
