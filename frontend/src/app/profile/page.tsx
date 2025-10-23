@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMyProfile, getMyBooks, updateProfile, deleteAccount, refreshToken, type UserResponseDTO, type BookResponseDTO } from "@/lib/api";
+import { getMyProfile, updateProfile, deleteAccount, refreshToken, type UserResponseDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { getRefreshToken, setTokens } from "@/lib/auth";
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading, logout } = useAuth();
   const [profile, setProfile] = useState<UserResponseDTO | null>(null);
-  const [books, setBooks] = useState<BookResponseDTO[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -25,13 +24,9 @@ export default function ProfilePage() {
     const load = async () => {
       if (!isAuthenticated) return;
       try {
-        const [me, myBooks] = await Promise.all([
-          getMyProfile(),
-          getMyBooks(),
-        ]);
+        const me = await getMyProfile();
         setProfile(me);
         setNameInput(me.name);
-        setBooks(myBooks);
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
         setError(message);
@@ -167,27 +162,7 @@ export default function ProfilePage() {
           )}
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold text-[#c9a961] mb-4">Meus Livros</h2>
-          <div className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
-            {!books ? (
-              <div className="animate-pulse text-[#cbbba2]">Carregando livros...</div>
-            ) : books.length === 0 ? (
-              <div className="text-[#cbbba2]">Você ainda não possui livros.</div>
-            ) : (
-              <ul className="space-y-3">
-                {books.map((b) => (
-                  <li key={b.id} className="border border-[#4a3620] rounded p-3 hover:border-[#8b6f47] transition">
-                    <div className="text-[#e8dcc8] font-medium">{b.name}</div>
-                    {b.shortDescription && (
-                      <div className="text-[#9b8c78] text-sm">{b.shortDescription}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </section>
+        {/* Meus Livros removido conforme solicitado */}
 
         {/* Danger Zone */}
         <section className="mt-8">
