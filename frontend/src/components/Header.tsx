@@ -51,12 +51,6 @@ export default function Header() {
             >
               Upload
             </Link>
-            <Link 
-              href="/about" 
-              className="text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium"
-            >
-              Sobre
-            </Link>
 
             {/* Auth Section */}
             {isLoading ? (

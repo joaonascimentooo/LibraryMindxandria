@@ -37,19 +37,13 @@ export default function Footer() {
                   Upload de Livros
                 </Link>
               </li>
-              <li>
-                <Link href="/about" className="text-[#8b6f47] hover:text-[#c9a961] transition-colors">
-                  Sobre
-                </Link>
-              </li>
             </ul>
           </div>
-
           {/* Contato */}
           <div>
             <h3 className="text-[#c9a961] font-bold mb-4">Contato</h3>
             <ul className="space-y-2 text-[#8b6f47]">
-              <li>📧 contact@librarymindxandria.com</li>
+              <li>📧contact.mindxandria@gmail.com</li>
               <li>📞 +55 11 1234-5678</li>
               <li>📍 São Paulo, Brasil</li>
             </ul>
