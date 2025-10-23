@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getMyBooks, updateBook, deleteBook, type BookResponseDTO, type BookRequestDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
+import { translateGenres } from "@/lib/genres";
 
 export default function MyBooksPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -219,6 +220,12 @@ export default function MyBooksPage() {
                   // Modo de visualização
                   <div>
                     <h2 className="text-xl font-bold text-[#c9a961] mb-2">{book.name}</h2>
+                    {book.genreType && book.genreType.length > 0 && (
+                      <div className="mb-3">
+                        <span className="text-xs text-[#9b8c78] font-medium uppercase tracking-wide">Gêneros: </span>
+                        <span className="text-sm text-[#c9a961]">{translateGenres(book.genreType)}</span>
+                      </div>
+                    )}
                     {book.shortDescription && (
                       <p className="text-[#e8dcc8] mb-2">{book.shortDescription}</p>
                     )}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createBook, type BookRequestDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { ALL_GENRES, translateGenre, type GenreType } from "@/lib/genres";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function UploadPage() {
     name: "",
     shortDescription: "",
     longDescription: "",
+    genreType: [],
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,6 +23,19 @@ export default function UploadPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleGenreToggle = (genre: GenreType) => {
+    setForm((prev) => {
+      const currentGenres = prev.genreType || [];
+      const isSelected = currentGenres.includes(genre);
+      
+      if (isSelected) {
+        return { ...prev, genreType: currentGenres.filter((g) => g !== genre) };
+      } else {
+        return { ...prev, genreType: [...currentGenres, genre] };
+      }
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +57,7 @@ export default function UploadPage() {
       await createBook(form);
       setSuccess("Livro criado com sucesso!");
       setTimeout(() => router.push("/"), 1200);
-      setForm({ name: "", shortDescription: "", longDescription: "" });
+      setForm({ name: "", shortDescription: "", longDescription: "", genreType: [] });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       setError(msg || "Falha ao criar o livro.");
@@ -130,6 +145,35 @@ export default function UploadPage() {
           />
         </div>
 
+        <div>
+          <label className="block text-sm font-medium text-[#e8dcc8] mb-2">
+            Gêneros ({form.genreType?.length || 0} selecionado{(form.genreType?.length || 0) !== 1 ? 's' : ''})
+          </label>
+          <div className="max-h-64 overflow-y-auto bg-[#2a1e13] border border-[#8b6f47] rounded-md p-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {ALL_GENRES.map((genre) => {
+                const isSelected = form.genreType?.includes(genre);
+                return (
+                  <button
+                    key={genre}
+                    type="button"
+                    onClick={() => handleGenreToggle(genre)}
+                    className={`
+                      px-3 py-1.5 rounded-md text-sm font-medium transition-all
+                      ${isSelected 
+                        ? 'bg-[#c9a961] text-[#1a1108] border-2 border-[#c9a961]' 
+                        : 'bg-[#1a120a] text-[#cbbba2] border border-[#8b6f47] hover:border-[#c9a961]'
+                      }
+                    `}
+                  >
+                    {translateGenre(genre)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
         <div className="flex items-center gap-3">
           <button
             type="submit"
@@ -140,7 +184,7 @@ export default function UploadPage() {
           </button>
           <button
             type="button"
-            onClick={() => setForm({ name: "", shortDescription: "", longDescription: "" })}
+            onClick={() => setForm({ name: "", shortDescription: "", longDescription: "", genreType: [] })}
             className="text-[#e8dcc8] hover:text-[#c9a961] transition-colors"
           >
             Limpar

@@ -1,6 +1,7 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
 import { fetchWithAuth } from "./fetchWithAuth";
+import { GenreType } from "./genres";
 
 export type TokenResponseDTO = {
   accessToken: string | null;
@@ -18,6 +19,7 @@ export type BookRequestDTO = {
   name: string;
   shortDescription: string;
   longDescription: string;
+  genreType?: GenreType[];
 };
 
 export type BookResponseDTO = {
@@ -25,6 +27,7 @@ export type BookResponseDTO = {
   name: string;
   shortDescription: string;
   longDescription: string;
+  genreType?: GenreType[];
 };
 
 export async function registerUser(payload: { name: string; email: string; password: string }) {
