@@ -2,12 +2,18 @@
 
 import { useState } from 'react';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  onSearch?: (searchTerm: string) => void;
+}
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Searching for:', searchTerm);
+    if (onSearch) {
+      onSearch(searchTerm);
+    }
   };
 
   return (

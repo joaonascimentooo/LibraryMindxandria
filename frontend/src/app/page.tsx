@@ -1,46 +1,48 @@
+'use client';
+
 import SearchBar from '@/components/SearchBar';
 import BookCard from '@/components/BookCard';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { getAllBooks, BookResponseDTO } from '@/lib/api';
 
 export default function Home() {
-  const featuredBooks = [
-    {
-      title: "1984",
-      author: "George Orwell",
-      category: "Ficção",
-      description: "Um romance distópico sobre vigilância, controle governamental e manipulação da verdade."
-    },
-    {
-      title: "Dom Casmurro",
-      author: "Machado de Assis",
-      category: "Romance",
-      description: "A história de Bentinho e Capitu, um dos maiores clássicos da literatura brasileira."
-    },
-    {
-      title: "O Pequeno Príncipe",
-      author: "Antoine de Saint-Exupéry",
-      category: "Fantasia",
-      description: "Uma fábula poética sobre amor, amizade e a essência da vida humana."
-    },
-    {
-      title: "Sapiens",
-      author: "Yuval Noah Harari",
-      category: "História",
-      description: "Uma breve história da humanidade desde a Idade da Pedra até a era moderna."
-    },
-    {
-      title: "O Senhor dos Anéis",
-      author: "J.R.R. Tolkien",
-      category: "Fantasia",
-      description: "A jornada épica de Frodo para destruir o Um Anel e salvar a Terra-média."
-    },
-    {
-      title: "Cem Anos de Solidão",
-      author: "Gabriel García Márquez",
-      category: "Romance",
-      description: "A saga da família Buendía através de várias gerações em Macondo."
-    },
-  ];
+  const router = useRouter();
+  const [books, setBooks] = useState<BookResponseDTO[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadBooks = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await getAllBooks(undefined, 0, 6); // Carregar apenas 6 livros para destaque
+      setBooks(response.content);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar livros';
+      console.error('Error loading books:', err);
+      if (errorMessage.includes('Failed to fetch') || errorMessage.includes('NetworkError')) {
+        setError('Não foi possível conectar ao servidor. Verifique se o backend está rodando em http://localhost:8080');
+      } else {
+        setError(errorMessage);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadBooks();
+  }, []);
+
+  const handleSearch = (term: string) => {
+    if (term.trim()) {
+      router.push(`/search?q=${encodeURIComponent(term)}`);
+    } else {
+      router.push('/search');
+    }
+  };
 
   const categories = [
     { name: "Romance", icon: "💕", count: 1250 },
@@ -63,7 +65,7 @@ export default function Home() {
             <p className="text-xl text-[#e8dcc8] mb-12 max-w-3xl mx-auto">
               Descubra milhares de livros, faça upload de suas obras e compartilhe conhecimento com o mundo
             </p>
-            <SearchBar />
+            <SearchBar onSearch={handleSearch} />
             
             {/* Estatísticas */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
@@ -110,16 +112,50 @@ export default function Home() {
         <section className="py-16 px-4 bg-[#0f0a05]">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-[#c9a961] mb-8">Livros em Destaque</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredBooks.map((book, index) => (
-                <BookCard key={index} {...book} />
-              ))}
-            </div>
-            <div className="text-center mt-12">
-              <button className="bg-[#8b6f47] text-[#e8dcc8] px-8 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all">
-                Ver Todos os Livros
-              </button>
-            </div>
+            
+            {loading && (
+              <div className="text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#8b6f47] border-t-[#c9a961]"></div>
+                <p className="text-[#c9a961] text-xl mt-4">Carregando livros...</p>
+              </div>
+            )}
+            
+            {error && (
+              <div className="text-center py-12">
+                <div className="text-red-500 text-xl">{error}</div>
+              </div>
+            )}
+            
+            {!loading && !error && books.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-[#8b6f47] text-xl">Nenhum livro disponível</div>
+              </div>
+            )}
+            
+            {!loading && !error && books.length > 0 && (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {books.map((book) => (
+                    <BookCard 
+                      key={book.id} 
+                      title={book.name}
+                      author="Autor Desconhecido"
+                      category={book.genreType?.[0] || 'Sem categoria'}
+                      description={book.shortDescription}
+                    />
+                  ))}
+                </div>
+                
+                <div className="text-center mt-12">
+                  <Link 
+                    href="/search"
+                    className="inline-block bg-[#8b6f47] text-[#e8dcc8] px-8 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all"
+                  >
+                    Ver Todos os Livros
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </section>
 

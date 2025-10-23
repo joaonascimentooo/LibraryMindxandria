@@ -149,3 +149,39 @@ export async function deleteBook(id: string): Promise<void> {
     throw new Error(text || "Erro ao deletar livro.");
   }
 }
+
+export type PageResponseDTO<T> = {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+};
+
+export async function getAllBooks(search?: string, page: number = 0, size: number = 20): Promise<PageResponseDTO<BookResponseDTO>> {
+  const params = new URLSearchParams();
+  if (search) params.append("search", search);
+  params.append("page", page.toString());
+  params.append("size", size.toString());
+
+  const url = `${API_URL}/books/all?${params.toString()}`;
+  console.log('Fetching books from:', url);
+  
+  try {
+    const res = await fetch(url);
+    console.log('Response status:', res.status);
+    
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('API Error:', text);
+      throw new Error(text || `Erro ${res.status}: Não foi possível carregar os livros.`);
+    }
+    
+    const data = await res.json();
+    console.log('Books loaded:', data);
+    return data as PageResponseDTO<BookResponseDTO>;
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    throw error;
+  }
+}

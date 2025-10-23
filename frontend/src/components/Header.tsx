@@ -50,7 +50,7 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              href="/books" 
+              href="/search" 
               className="text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium"
             >
               Explorar Livros
@@ -147,18 +147,21 @@ export default function Header() {
             <Link 
               href="/" 
               className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2"
+              onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
-              href="/books" 
+              href="/search" 
               className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2"
+              onClick={() => setIsMenuOpen(false)}
             >
               Explorar Livros
             </Link>
             <Link 
               href="/upload" 
               className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2"
+              onClick={() => setIsMenuOpen(false)}
             >
               Upload
             </Link>
