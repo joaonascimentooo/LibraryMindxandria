@@ -101,6 +101,19 @@ export async function getMyBooks(): Promise<BookResponseDTO[]> {
   return (await res.json()) as BookResponseDTO[];
 }
 
+export async function updateProfile(payload: { name: string }): Promise<UserResponseDTO> {
+  const res = await fetchWithAuth(`${API_URL}/users`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Não foi possível atualizar o perfil.");
+  }
+  return (await res.json()) as UserResponseDTO;
+}
+
 export async function updateBook(id: string, payload: BookRequestDTO): Promise<BookResponseDTO> {
   const res = await fetchWithAuth(`${API_URL}/books/${id}`, {
     method: "PUT",
