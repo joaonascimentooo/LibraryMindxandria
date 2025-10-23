@@ -4,6 +4,7 @@ import com.librarymindxandria.backend.dtos.book.BookRequestDTO;
 import com.librarymindxandria.backend.dtos.book.BookUpdateRequestDTO;
 import com.librarymindxandria.backend.models.BookResponseDTO;
 import com.librarymindxandria.backend.services.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class BookController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<BookResponseDTO> uploadBook(@RequestBody BookRequestDTO bookRequestDTO){
+    public ResponseEntity<BookResponseDTO> uploadBook(@RequestBody @Valid BookRequestDTO bookRequestDTO){
       return ResponseEntity.ok(bookService.createBook(bookRequestDTO));
     }
 
@@ -31,7 +32,7 @@ public class BookController {
     public ResponseEntity<BookResponseDTO> updateMyBook(
             @PathVariable String id,
             @RequestBody BookUpdateRequestDTO updateRequestDTO){
-        return ResponseEntity.ok(bookService.uploadMyBook(id,updateRequestDTO));
+        return ResponseEntity.ok(bookService.updateMyBook(id,updateRequestDTO));
     }
 
     @DeleteMapping("/{id}")

@@ -51,7 +51,7 @@ public class BookService {
     }
 
     @Transactional
-    public BookResponseDTO uploadMyBook(String bookId, BookUpdateRequestDTO updateRequestDTO){
+    public BookResponseDTO updateMyBook(String bookId, BookUpdateRequestDTO updateRequestDTO){
 
         User currentUser = userService.getAuthenticatedUserEntity();
 

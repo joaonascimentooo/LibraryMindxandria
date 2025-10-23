@@ -1,4 +1,4 @@
-package com.librarymindxandria.backend.core.security;
+package com.librarymindxandria.backend.core.config;
 
 import com.librarymindxandria.backend.models.User;
 import com.librarymindxandria.backend.repositories.UserRepository;

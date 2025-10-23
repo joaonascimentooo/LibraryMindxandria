@@ -1,6 +1,6 @@
 package com.librarymindxandria.backend.core.security.token;
 
-import com.librarymindxandria.backend.core.security.CustomUserDetailsService;
+import com.librarymindxandria.backend.core.config.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
