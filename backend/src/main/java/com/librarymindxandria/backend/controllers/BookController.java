@@ -1,7 +1,7 @@
 package com.librarymindxandria.backend.controllers;
 
-import com.librarymindxandria.backend.dtos.BookRequestDTO;
-import com.librarymindxandria.backend.dtos.BookUpdateRequestDTO;
+import com.librarymindxandria.backend.dtos.book.BookRequestDTO;
+import com.librarymindxandria.backend.dtos.book.BookUpdateRequestDTO;
 import com.librarymindxandria.backend.models.BookResponseDTO;
 import com.librarymindxandria.backend.services.BookService;
 import lombok.RequiredArgsConstructor;

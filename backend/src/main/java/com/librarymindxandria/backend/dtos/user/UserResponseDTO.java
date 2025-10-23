@@ -1,4 +1,4 @@
-package com.librarymindxandria.backend.dtos;
+package com.librarymindxandria.backend.dtos.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

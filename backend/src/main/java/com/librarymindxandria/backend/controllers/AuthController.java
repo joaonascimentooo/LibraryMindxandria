@@ -1,9 +1,9 @@
 package com.librarymindxandria.backend.controllers;
 
-import com.librarymindxandria.backend.dtos.LoginRequestDTO;
-import com.librarymindxandria.backend.dtos.RefreshTokenRequestDTO;
-import com.librarymindxandria.backend.dtos.RegisterRequestDTO;
-import com.librarymindxandria.backend.dtos.TokenResponseDTO;
+import com.librarymindxandria.backend.dtos.auth.LoginRequestDTO;
+import com.librarymindxandria.backend.dtos.token.RefreshTokenRequestDTO;
+import com.librarymindxandria.backend.dtos.auth.RegisterRequestDTO;
+import com.librarymindxandria.backend.dtos.token.TokenResponseDTO;
 import com.librarymindxandria.backend.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

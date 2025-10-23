@@ -1,4 +1,4 @@
-package com.librarymindxandria.backend.dtos;
+package com.librarymindxandria.backend.dtos.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

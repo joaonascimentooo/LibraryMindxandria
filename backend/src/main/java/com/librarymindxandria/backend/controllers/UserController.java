@@ -1,12 +1,11 @@
 package com.librarymindxandria.backend.controllers;
 
-import com.librarymindxandria.backend.dtos.UserResponseDTO;
+import com.librarymindxandria.backend.dtos.user.UserResponseDTO;
+import com.librarymindxandria.backend.dtos.user.UserUpdateRequestDTO;
 import com.librarymindxandria.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -19,5 +18,11 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> getMyProfile(){
         UserResponseDTO userProfile = userService.getAuthenticatedUserProfile();
         return ResponseEntity.ok(userProfile);
+    }
+
+    @PutMapping
+    public ResponseEntity<UserResponseDTO> updateProfile(@RequestBody UserUpdateRequestDTO requestDTO){
+        UserResponseDTO updateProfile = userService.updateUser(requestDTO);
+        return ResponseEntity.ok(updateProfile);
     }
 }
