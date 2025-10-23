@@ -1,5 +1,6 @@
 import SearchBar from '@/components/SearchBar';
 import BookCard from '@/components/BookCard';
+import Link from 'next/link';
 
 export default function Home() {
   const featuredBooks = [
@@ -131,9 +132,9 @@ export default function Home() {
             <p className="text-xl text-[#e8dcc8] mb-8">
               Faça upload dos seus livros e ajude a construir a maior biblioteca digital do Brasil
             </p>
-            <button className="bg-[#c9a961] text-[#1a1108] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all">
+            <Link href="/upload" className="inline-block bg-[#c9a961] text-[#1a1108] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all">
               Fazer Upload Agora
-            </button>
+            </Link>
           </div>
         </section>
       </main>
