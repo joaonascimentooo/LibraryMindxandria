@@ -32,6 +32,13 @@ public class BookService {
                 .toList();
     }
 
+    public List<BookResponseDTO> getAllBooks(){
+        List<Book> books = bookRepository.findAll();
+        return books.stream()
+                .map(this::mapBookToDTO)
+                .toList();
+    }
+
     @Transactional
     public BookResponseDTO createBook(BookRequestDTO requestDTO){
 

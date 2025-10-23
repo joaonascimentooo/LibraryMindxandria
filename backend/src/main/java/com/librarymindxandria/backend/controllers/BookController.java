@@ -23,6 +23,12 @@ public class BookController {
         return ResponseEntity.ok(myBooks);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<BookResponseDTO>> getAllBooks(){
+        List<BookResponseDTO> allBooks = bookService.getAllBooks();
+        return ResponseEntity.ok(allBooks);
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<BookResponseDTO> uploadBook(@RequestBody @Valid BookRequestDTO bookRequestDTO){
       return ResponseEntity.ok(bookService.createBook(bookRequestDTO));
