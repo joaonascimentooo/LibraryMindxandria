@@ -4,6 +4,16 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
+function formatName(name: string | undefined): string {
+  if (!name) return 'Usuário';
+  return name
+    .replace(/([A-Z])/g, ' $1')
+    .trim()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -62,9 +72,9 @@ export default function Header() {
                   className="flex items-center space-x-2 bg-[#2a1e13] hover:bg-[#3a2e23] px-3 py-1.5 rounded-full transition-colors border border-[#8b6f47]"
                 >
                   <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c9a961] to-[#8b6f47] flex items-center justify-center text-[#1a1108] font-semibold text-sm shadow-md">
-                    {user?.name?.[0]?.toUpperCase() || "U"}
+                    {formatName(user?.name)?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="text-[#e8dcc8] font-medium text-sm">{user?.name || "Usuário"}</span>
+                  <span className="text-[#e8dcc8] font-medium text-sm">{formatName(user?.name)}</span>
                   <svg className="w-3.5 h-3.5 text-[#c9a961]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -152,12 +162,6 @@ export default function Header() {
             >
               Upload
             </Link>
-            <Link 
-              href="/about" 
-              className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2"
-            >
-              Sobre
-            </Link>
 
             {/* Mobile Auth Section */}
             {!isLoading && (
@@ -166,11 +170,10 @@ export default function Header() {
                   <div className="border-t border-[#8b6f47] pt-4 space-y-2">
                     <div className="flex items-center space-x-3 px-2 py-2">
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#c9a961] to-[#8b6f47] flex items-center justify-center text-[#1a1108] font-semibold text-sm shadow-md">
-                        {user?.name?.[0]?.toUpperCase() || "U"}
+                        {formatName(user?.name)?.[0]?.toUpperCase() || "U"}
                       </div>
                       <div>
-                        <p className="text-[#e8dcc8] font-medium text-sm">{user?.name || "Usuário"}</p>
-                        <p className="text-[#9b8c78] text-xs">{user?.email}</p>
+                        <p className="text-[#e8dcc8] font-medium text-sm">{formatName(user?.name)}</p>
                       </div>
                     </div>
                     <Link
