@@ -51,4 +51,9 @@ public class UserService {
 
         return userResponseDTO;
     }
+
+    public void deleteUser(){
+        User currentUser = getAuthenticatedUserEntity();
+        userRepository.delete(currentUser);
+    }
 }

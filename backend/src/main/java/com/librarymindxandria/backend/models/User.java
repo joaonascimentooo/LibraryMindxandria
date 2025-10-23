@@ -1,6 +1,7 @@
 package com.librarymindxandria.backend.models;
 
 import com.librarymindxandria.backend.core.Auditable;
+import com.librarymindxandria.backend.core.security.token.RefreshToken;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,8 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Book> booksList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RefreshToken refreshToken;
+
 }

@@ -25,4 +25,10 @@ public class UserController {
         UserResponseDTO updateProfile = userService.updateUser(requestDTO);
         return ResponseEntity.ok(updateProfile);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteProfile() {
+        userService.deleteUser();
+        return ResponseEntity.noContent().build();
+    }
 }
