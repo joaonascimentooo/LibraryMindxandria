@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAccessToken } from "@/lib/auth";
 import { getMyProfile, getMyBooks, type UserResponseDTO, type BookResponseDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -15,10 +14,9 @@ export default function ProfilePage() {
     const load = async () => {
       if (!isAuthenticated) return;
       try {
-        const token = getAccessToken() || undefined;
         const [me, myBooks] = await Promise.all([
-          getMyProfile(token),
-          getMyBooks(token),
+          getMyProfile(),
+          getMyBooks(),
         ]);
         setProfile(me);
         setBooks(myBooks);

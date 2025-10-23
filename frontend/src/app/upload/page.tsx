@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { createBook, type BookRequestDTO } from "@/lib/api";
-import { getAccessToken } from "@/lib/auth";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
@@ -40,10 +39,8 @@ export default function UploadPage() {
 
     try {
       setSubmitting(true);
-      const token = getAccessToken() || undefined;
-      await createBook(form, token);
+      await createBook(form);
       setSuccess("Livro criado com sucesso!");
-      // Redireciona após breve delay
       setTimeout(() => router.push("/"), 1200);
       setForm({ name: "", shortDescription: "", longDescription: "" });
     } catch (err: unknown) {
@@ -55,7 +52,6 @@ export default function UploadPage() {
   };
 
   if (!isLoading && !isAuthenticated) {
-    // Renderiza um aviso simples quando não autenticado, centralizado
     return (
       <main className="min-h-screen bg-[#0f0a05] text-[#e8dcc8]">
         <div className="min-h-screen flex items-center justify-center px-4">

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAccessToken, clearTokens } from "@/lib/auth";
+import { getAccessToken, clearTokens, decodeToken, isTokenExpired } from "@/lib/auth";
+import { useTokenRefresh } from "./useTokenRefresh";
 
 type UserInfo = {
   email: string;
@@ -12,6 +13,9 @@ export function useAuth() {
   const [user, setUser] = useState<UserInfo>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Hook que gerencia a renovação automática de tokens
+  useTokenRefresh();
+
   useEffect(() => {
     const checkAuth = () => {
       const token = getAccessToken();
@@ -21,20 +25,24 @@ export function useAuth() {
         return;
       }
 
+      // Verifica se o token expirou
+      if (isTokenExpired(token)) {
+        clearTokens();
+        setUser(null);
+        setIsLoading(false);
+        return;
+      }
+
       try {
-        // Decodificar JWT (formato: header.payload.signature)
-        const payload = token.split(".")[1];
-        const decoded = JSON.parse(atob(payload));
-        
-        // Verificar se o token expirou
-        if (decoded.exp && decoded.exp * 1000 < Date.now()) {
-          clearTokens();
-          setUser(null);
-        } else {
+        const decoded = decodeToken(token);
+        if (decoded) {
           setUser({
             email: decoded.sub || decoded.email || "",
             name: decoded.name || decoded.sub?.split("@")[0] || "Usuário",
           });
+        } else {
+          clearTokens();
+          setUser(null);
         }
       } catch (error) {
         console.error("Erro ao decodificar token:", error);
@@ -47,9 +55,7 @@ export function useAuth() {
 
     checkAuth();
 
-    // Revalidar quando o localStorage mudar (ex.: login em outra aba)
     window.addEventListener("storage", checkAuth);
-    // Revalidar quando houver mudança de auth na mesma aba
     window.addEventListener("auth-change", checkAuth);
     return () => {
       window.removeEventListener("storage", checkAuth);

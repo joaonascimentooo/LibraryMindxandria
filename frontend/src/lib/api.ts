@@ -1,5 +1,7 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
+import { fetchWithAuth } from "./fetchWithAuth";
+
 export type TokenResponseDTO = {
   accessToken: string | null;
   refreshToken: string | null;
@@ -66,12 +68,11 @@ export async function refreshToken(refreshToken: string): Promise<TokenResponseD
   return data;
 }
 
-export async function createBook(payload: BookRequestDTO, accessToken?: string): Promise<BookResponseDTO> {
-  const res = await fetch(`${API_URL}/books/upload`, {
+export async function createBook(payload: BookRequestDTO): Promise<BookResponseDTO> {
+  const res = await fetchWithAuth(`${API_URL}/books/upload`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
     body: JSON.stringify(payload),
   });
@@ -82,12 +83,8 @@ export async function createBook(payload: BookRequestDTO, accessToken?: string):
   return (await res.json()) as BookResponseDTO;
 }
 
-export async function getMyProfile(accessToken?: string): Promise<UserResponseDTO> {
-  const res = await fetch(`${API_URL}/users/me`, {
-    headers: {
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-    },
-  });
+export async function getMyProfile(): Promise<UserResponseDTO> {
+  const res = await fetchWithAuth(`${API_URL}/users/me`);
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || "Não foi possível carregar o perfil.");
@@ -95,12 +92,8 @@ export async function getMyProfile(accessToken?: string): Promise<UserResponseDT
   return (await res.json()) as UserResponseDTO;
 }
 
-export async function getMyBooks(accessToken?: string): Promise<BookResponseDTO[]> {
-  const res = await fetch(`${API_URL}/books`, {
-    headers: {
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-    },
-  });
+export async function getMyBooks(): Promise<BookResponseDTO[]> {
+  const res = await fetchWithAuth(`${API_URL}/books`);
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || "Não foi possível carregar seus livros.");

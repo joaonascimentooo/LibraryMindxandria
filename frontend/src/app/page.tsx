@@ -2,7 +2,6 @@ import SearchBar from '@/components/SearchBar';
 import BookCard from '@/components/BookCard';
 
 export default function Home() {
-  // Dados mockados para exemplo
   const featuredBooks = [
     {
       title: "1984",
