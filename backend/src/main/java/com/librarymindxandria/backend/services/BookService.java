@@ -34,6 +34,7 @@ public class BookService {
                 .toList();
     }
 
+    @Transactional
     public Page<BookResponseDTO> getAllBooks(String searchTerm, Pageable pageable){
         Page<Book> booksPage;
 
