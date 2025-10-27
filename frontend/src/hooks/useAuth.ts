@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { getAccessToken, clearTokens, decodeToken, isTokenExpired } from "@/lib/auth";
 import { useTokenRefresh } from "./useTokenRefresh";
+import { getMyProfile } from "@/lib/api";
 
 type UserInfo = {
   email: string;
@@ -17,7 +18,7 @@ export function useAuth() {
   useTokenRefresh();
 
   useEffect(() => {
-    const checkAuth = () => {
+    const checkAuth = async () => {
       const token = getAccessToken();
       if (!token) {
         setUser(null);
@@ -34,6 +35,7 @@ export function useAuth() {
       }
 
       try {
+        // Primeiro: decodifica o token para ter um fallback imediato
         const decoded = decodeToken(token);
         if (decoded) {
           setUser({
@@ -43,6 +45,14 @@ export function useAuth() {
         } else {
           clearTokens();
           setUser(null);
+        }
+
+        
+        try {
+          const me = await getMyProfile();
+          setUser({ email: me.email, name: me.name });
+        } catch (e) {
+          console.warn("Não foi possível carregar o perfil atual: ", e);
         }
       } catch (error) {
         console.error("Erro ao decodificar token:", error);
@@ -55,11 +65,18 @@ export function useAuth() {
 
     checkAuth();
 
+    const onProfileUpdated = () => {
+      
+      checkAuth();
+    };
+
     window.addEventListener("storage", checkAuth);
     window.addEventListener("auth-change", checkAuth);
+    window.addEventListener("profile-updated", onProfileUpdated);
     return () => {
       window.removeEventListener("storage", checkAuth);
       window.removeEventListener("auth-change", checkAuth);
+      window.removeEventListener("profile-updated", onProfileUpdated);
     };
   }, []);
 

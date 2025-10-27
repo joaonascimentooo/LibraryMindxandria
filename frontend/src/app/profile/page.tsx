@@ -71,6 +71,9 @@ export default function ProfilePage() {
           setTokens(tokens.accessToken, tokens.refreshToken);
         }
       }
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("profile-updated"));
+      }
       setSuccess("Nome atualizado com sucesso!");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
