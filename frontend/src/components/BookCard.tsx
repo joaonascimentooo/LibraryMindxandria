@@ -18,6 +18,7 @@ export default function BookCard({
       {/* Imagem da capa */}
       <div className="h-64 bg-[#2d1f0e] flex items-center justify-center relative overflow-hidden">
         {coverImage ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
           <img src={coverImage} alt={title} className="w-full h-full object-cover" />
         ) : (
           <div className="text-6xl">📖</div>

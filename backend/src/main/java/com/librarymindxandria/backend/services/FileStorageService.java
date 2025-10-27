@@ -92,7 +92,7 @@ public class FileStorageService {
             String contentType = null;
             try {
                 contentType = servletContext.getMimeType(resource.getFile().getAbsolutePath());
-            } catch (IOException ex) { /* ignora */ }
+            } catch (IOException ex) { }
 
             if (contentType == null) {
                 contentType = "application/octet-stream";

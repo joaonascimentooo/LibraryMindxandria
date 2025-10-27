@@ -28,6 +28,7 @@ export type BookResponseDTO = {
   shortDescription: string;
   longDescription: string;
   genreType?: GenreType[];
+  coverImageUrl?: string;
 };
 
 export async function registerUser(payload: { name: string; email: string; password: string }) {
@@ -82,6 +83,21 @@ export async function createBook(payload: BookRequestDTO): Promise<BookResponseD
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || "Erro ao criar livro.");
+  }
+  return (await res.json()) as BookResponseDTO;
+}
+
+export async function uploadBookCover(bookId: string, file: File): Promise<BookResponseDTO> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetchWithAuth(`${API_URL}/books/${bookId}/cover`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Erro ao fazer upload da capa.");
   }
   return (await res.json()) as BookResponseDTO;
 }

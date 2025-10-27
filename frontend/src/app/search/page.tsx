@@ -150,6 +150,7 @@ export default function SearchPage() {
                     author="Autor Desconhecido"
                     category={book.genreType?.[0] || 'Sem categoria'}
                     description={book.shortDescription}
+                    coverImage={book.coverImageUrl}
                   />
                 ))}
               </div>

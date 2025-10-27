@@ -40,7 +40,6 @@ export default function ProfilePage() {
       setDeleting(true);
       setError(null);
       await deleteAccount();
-      // usa o logout do hook para limpar tokens e redirecionar
       logout();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
@@ -65,7 +64,6 @@ export default function ProfilePage() {
       setProfile((prev) => (prev ? { ...prev, name: updated.name } : updated));
       setIsEditingName(false);
 
-      // Tenta renovar o access token para refletir o novo nome no Header imediatamente
       const rt = getRefreshToken();
       if (rt) {
         const tokens = await refreshToken(rt);
@@ -162,7 +160,6 @@ export default function ProfilePage() {
           )}
         </section>
 
-        {/* Meus Livros removido conforme solicitado */}
 
         {/* Danger Zone */}
         <section className="mt-8">
