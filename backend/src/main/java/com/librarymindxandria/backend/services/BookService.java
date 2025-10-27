@@ -3,7 +3,7 @@ package com.librarymindxandria.backend.services;
 import com.librarymindxandria.backend.dtos.book.BookRequestDTO;
 import com.librarymindxandria.backend.dtos.book.BookUpdateRequestDTO;
 import com.librarymindxandria.backend.models.Book;
-import com.librarymindxandria.backend.models.BookResponseDTO;
+import com.librarymindxandria.backend.dtos.book.BookResponseDTO;
 import com.librarymindxandria.backend.models.User;
 import com.librarymindxandria.backend.repositories.BookRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class BookService {
     private final BookRepository bookRepository;
     private final UserService userService;
+    private final FileStorageService fileStorageService;
 
     @Transactional
     public List<BookResponseDTO> getMyBooks(){
@@ -66,6 +68,24 @@ public class BookService {
     }
 
     @Transactional
+    public BookResponseDTO uploadBookCover(String bookId, MultipartFile file) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+
+        User currentUser = userService.getAuthenticatedUserEntity();
+        if (!book.getUser().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("Você não tem permissão para editar este livro.");
+        }
+
+        String filename = fileStorageService.storeFile(file);
+
+        book.setCoverImageName(filename);
+        Book updatedBook = bookRepository.save(book);
+
+        return mapBookToDTO(updatedBook);
+    }
+
+    @Transactional
     public BookResponseDTO updateMyBook(String bookId, BookUpdateRequestDTO updateRequestDTO){
 
         User currentUser = userService.getAuthenticatedUserEntity();
@@ -106,6 +126,8 @@ public class BookService {
         responseDTO.setShortDescription(book.getShortDescription());
         responseDTO.setLongDescription(book.getLongDescription());
         responseDTO.setGenreType(book.getGenreTypes());
+        String imageUrl = fileStorageService.buildFileUri(book.getCoverImageName());
+        responseDTO.setCoverImageUrl(imageUrl);
         return responseDTO;
     }
 }

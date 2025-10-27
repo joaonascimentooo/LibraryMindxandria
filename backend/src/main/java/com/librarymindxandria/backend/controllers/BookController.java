@@ -2,7 +2,7 @@ package com.librarymindxandria.backend.controllers;
 
 import com.librarymindxandria.backend.dtos.book.BookRequestDTO;
 import com.librarymindxandria.backend.dtos.book.BookUpdateRequestDTO;
-import com.librarymindxandria.backend.models.BookResponseDTO;
+import com.librarymindxandria.backend.dtos.book.BookResponseDTO;
 import com.librarymindxandria.backend.services.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,6 +38,15 @@ public class BookController {
     @PostMapping("/upload")
     public ResponseEntity<BookResponseDTO> uploadBook(@RequestBody @Valid BookRequestDTO bookRequestDTO){
       return ResponseEntity.ok(bookService.createBook(bookRequestDTO));
+    }
+
+    @PostMapping("/{id}/cover")
+    public ResponseEntity<BookResponseDTO> uploadCover(
+            @PathVariable String id,
+            @RequestParam("file") MultipartFile file) {
+
+        BookResponseDTO updatedBook = bookService.uploadBookCover(id, file);
+        return ResponseEntity.ok(updatedBook);
     }
 
     @PutMapping("/{id}")

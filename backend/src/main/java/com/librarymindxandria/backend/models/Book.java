@@ -28,4 +28,7 @@ public class Book extends Auditable {
 
     @Enumerated(EnumType.STRING)
     private List<GenreType> genreTypes;
+
+    @Column(name = "cover_image_name")
+    private String coverImageName;
 }
