@@ -2,6 +2,7 @@ package com.librarymindxandria.backend.services;
 
 import com.librarymindxandria.backend.dtos.book.BookRequestDTO;
 import com.librarymindxandria.backend.dtos.book.BookUpdateRequestDTO;
+import com.librarymindxandria.backend.dtos.genre.GenreStatDTO;
 import com.librarymindxandria.backend.models.Book;
 import com.librarymindxandria.backend.dtos.book.BookResponseDTO;
 import com.librarymindxandria.backend.models.User;
@@ -24,6 +25,11 @@ public class BookService {
     private final BookRepository bookRepository;
     private final UserService userService;
     private final FileStorageService fileStorageService;
+
+    @Transactional
+    public List<GenreStatDTO> getGenreStats(){
+        return bookRepository.countBooksByGenre();
+    }
 
     @Transactional
     public List<BookResponseDTO> getMyBooks(){
@@ -98,7 +104,7 @@ public class BookService {
 
         Optional.ofNullable(updateRequestDTO.getName())
                 .ifPresent(bookToUpdate::setName);
-        Optional.ofNullable(updateRequestDTO.getLongDescription())
+            Optional.ofNullable(updateRequestDTO.getLongDescription())
                 .ifPresent(bookToUpdate::setLongDescription);
         Optional.ofNullable(updateRequestDTO.getShortDescription())
                 .ifPresent(bookToUpdate::setShortDescription);

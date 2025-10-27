@@ -3,6 +3,7 @@ package com.librarymindxandria.backend.controllers;
 import com.librarymindxandria.backend.dtos.book.BookRequestDTO;
 import com.librarymindxandria.backend.dtos.book.BookUpdateRequestDTO;
 import com.librarymindxandria.backend.dtos.book.BookResponseDTO;
+import com.librarymindxandria.backend.dtos.genre.GenreStatDTO;
 import com.librarymindxandria.backend.services.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,12 @@ public class BookController {
     public ResponseEntity<List<BookResponseDTO>> getMyBooks(){
         List<BookResponseDTO> myBooks = bookService.getMyBooks();
         return ResponseEntity.ok(myBooks);
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<List<GenreStatDTO>> getGenreStats(){
+        List<GenreStatDTO> stats = bookService.getGenreStats();
+        return ResponseEntity.ok(stats);
     }
 
     @GetMapping("/all")

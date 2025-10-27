@@ -26,7 +26,10 @@ public class Book extends Auditable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ElementCollection(targetClass = GenreType.class)
     @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "book_genre_types", joinColumns = @JoinColumn(name = "book_id"))
+    @Column(name = "genre_type")
     private List<GenreType> genreTypes;
 
     @Column(name = "cover_image_name")
