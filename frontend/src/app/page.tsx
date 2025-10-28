@@ -5,13 +5,16 @@ import BookCard from '@/components/BookCard';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAllBooks, BookResponseDTO } from '@/lib/api';
+import { getAllBooks, BookResponseDTO, getGenreStats, GenreStatDTO } from '@/lib/api';
+import { GenreType, translateGenre } from '@/lib/genres';
 
 export default function Home() {
   const router = useRouter();
   const [books, setBooks] = useState<BookResponseDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [genreStats, setGenreStats] = useState<GenreStatDTO[]>([]);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   const loadBooks = async () => {
     try {
@@ -34,6 +37,20 @@ export default function Home() {
 
   useEffect(() => {
     loadBooks();
+    // Load genre stats
+    (async () => {
+      try {
+        setStatsLoading(true);
+        const stats = await getGenreStats();
+        // sort by count desc and keep top 6 for cards
+        const top = stats.sort((a, b) => b.count - a.count).slice(0, 6);
+        setGenreStats(top);
+      } catch (e) {
+        console.error('Erro ao carregar estatísticas de gêneros:', e);
+      } finally {
+        setStatsLoading(false);
+      }
+    })();
   }, []);
 
   const handleSearch = (term: string) => {
@@ -44,14 +61,22 @@ export default function Home() {
     }
   };
 
-  const categories = [
-    { name: "Romance", icon: "💕", count: 1250 },
-    { name: "Ficção", icon: "🌟", count: 980 },
-    { name: "História", icon: "🏛️", count: 756 },
-    { name: "Fantasia", icon: "🐉", count: 642 },
-    { name: "Ciência", icon: "🔬", count: 534 },
-    { name: "Filosofia", icon: "🤔", count: 421 },
-  ];
+  const GENRE_ICONS: Partial<Record<GenreType, string>> = {
+    ROMANCE: '💕',
+    FANTASY: '🐉',
+    HISTORY: '🏛️',
+    SCIENCE: '🔬',
+    PHILOSOPHY: '🤔',
+    MYSTERY: '🕵️',
+    THRILLER: '⚡',
+    HORROR: '👻',
+    COMEDY: '🎭',
+    POETRY: '📝',
+    DRAMA: '🎬',
+    ACTION: '�️',
+    ADVENTURE: '🧭',
+    SCIENCE_FICTION: '🚀',
+  };
 
   return (
     <>
@@ -89,22 +114,34 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Categorias */}
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-[#c9a961] mb-8">Explorar por Categoria</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {categories.map((category) => (
-                <button
-                  key={category.name}
-                  className="bg-[#1a120a] border border-[#4a3620] hover:border-[#c9a961] rounded-lg p-6 text-center transition-all hover:transform hover:scale-105 duration-300"
-                >
-                  <div className="text-4xl mb-3">{category.icon}</div>
-                  <div className="text-[#e8dcc8] font-semibold mb-1">{category.name}</div>
-                  <div className="text-[#8b6f47] text-sm">{category.count} livros</div>
-                </button>
-              ))}
-            </div>
+            {statsLoading ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="bg-[#1a120a] border border-[#4a3620] rounded-lg p-6 animate-pulse h-[140px]" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {genreStats.map((g) => {
+                  const icon = GENRE_ICONS[g.genre] ?? '📚';
+                  return (
+                    <button
+                      key={g.genre}
+                      className="bg-[#1a120a] border border-[#4a3620] hover:border-[#c9a961] rounded-lg p-6 text-center transition-all hover:transform hover:scale-105 duration-300"
+                      // In the future we could route to a filtered search by genre
+                      onClick={() => router.push('/search')}
+                    >
+                      <div className="text-4xl mb-3">{icon}</div>
+                      <div className="text-[#e8dcc8] font-semibold mb-1">{translateGenre(g.genre)}</div>
+                      <div className="text-[#8b6f47] text-sm">{g.count} {g.count === 1 ? 'livro' : 'livros'}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
 

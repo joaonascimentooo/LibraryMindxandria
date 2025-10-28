@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { getAllBooks, BookResponseDTO } from '@/lib/api';
 import BookCard from '@/components/BookCard';
@@ -8,6 +8,14 @@ import SearchBar from '@/components/SearchBar';
 import Link from 'next/link';
 
 export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-20 text-[#c9a961]">Carregando busca…</div>}>
+      <SearchPageContent />
+    </Suspense>
+  );
+}
+
+function SearchPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [books, setBooks] = useState<BookResponseDTO[]>([]);

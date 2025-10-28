@@ -31,6 +31,12 @@ export type BookResponseDTO = {
   coverImageUrl?: string;
 };
 
+// Genres stats
+export type GenreStatDTO = {
+  genre: GenreType;
+  count: number;
+};
+
 export async function registerUser(payload: { name: string; email: string; password: string }) {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
@@ -164,6 +170,15 @@ export async function deleteBook(id: string): Promise<void> {
     const text = await res.text();
     throw new Error(text || "Erro ao deletar livro.");
   }
+}
+
+export async function getGenreStats(): Promise<GenreStatDTO[]> {
+  const res = await fetch(`${API_URL}/books/stats`);
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Não foi possível carregar as estatísticas de gênero.");
+  }
+  return (await res.json()) as GenreStatDTO[];
 }
 
 export type PageResponseDTO<T> = {
