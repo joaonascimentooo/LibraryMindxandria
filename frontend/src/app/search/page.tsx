@@ -159,6 +159,7 @@ function SearchPageContent() {
                     category={book.genreType?.[0] || 'Sem categoria'}
                     description={book.shortDescription}
                     coverImage={book.coverImageUrl}
+                    readUrl={book.pdfDownloadUrl ? `/read?url=${encodeURIComponent(book.pdfDownloadUrl)}` : undefined}
                   />
                 ))}
               </div>

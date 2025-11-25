@@ -29,6 +29,7 @@ export type BookResponseDTO = {
   longDescription: string;
   genreType?: GenreType[];
   coverImageUrl?: string;
+  pdfDownloadUrl?: string;
 };
 
 // Genres stats
@@ -104,6 +105,21 @@ export async function uploadBookCover(bookId: string, file: File): Promise<BookR
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || "Erro ao fazer upload da capa.");
+  }
+  return (await res.json()) as BookResponseDTO;
+}
+
+export async function uploadBookPdf(bookId: string, file: File): Promise<BookResponseDTO> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetchWithAuth(`${API_URL}/books/${bookId}/pdf`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Erro ao fazer upload do PDF.");
   }
   return (await res.json()) as BookResponseDTO;
 }

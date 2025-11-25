@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createBook, uploadBookCover, type BookRequestDTO } from "@/lib/api";
+import { createBook, uploadBookCover, uploadBookPdf, type BookRequestDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ALL_GENRES, translateGenre, type GenreType } from "@/lib/genres";
@@ -18,6 +18,7 @@ export default function UploadPage() {
   });
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -71,6 +72,27 @@ export default function UploadPage() {
     setCoverPreview(null);
   };
 
+  const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // 20MB limit for PDFs
+      if (file.size > 20 * 1024 * 1024) {
+        setError("O PDF deve ter no máximo 20MB");
+        return;
+      }
+      if (file.type !== 'application/pdf') {
+        setError("Por favor, selecione um arquivo PDF válido");
+        return;
+      }
+      setPdfFile(file);
+      setError(null);
+    }
+  };
+
+  const handleRemovePdf = () => {
+    setPdfFile(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -94,6 +116,10 @@ export default function UploadPage() {
       // 2. Se houver imagem, fazer upload da capa
       if (coverImage && createdBook.id) {
         await uploadBookCover(createdBook.id, coverImage);
+      }
+      // 3. Se houver PDF, fazer upload do PDF
+      if (pdfFile && createdBook.id) {
+        await uploadBookPdf(createdBook.id, pdfFile);
       }
       
       setSuccess("Livro criado com sucesso!");
@@ -203,6 +229,34 @@ export default function UploadPage() {
                 </svg>
               </button>
             </div>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-[#e8dcc8] mb-2">
+            Arquivo PDF (opcional)
+          </label>
+          <div className="flex items-center gap-3">
+            <input
+              type="file"
+              id="pdf-upload"
+              accept="application/pdf"
+              onChange={handlePdfChange}
+              className="block w-full text-sm text-[#cbbba2] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#c9a961] file:text-[#1a1108] hover:file:bg-[#8b6f47]"
+            />
+            {pdfFile && (
+              <button
+                type="button"
+                onClick={handleRemovePdf}
+                className="text-red-400 hover:text-red-300"
+              >
+                Remover PDF
+              </button>
+            )}
+          </div>
+          <p className="text-[#6b5737] text-xs mt-1">Somente PDF, até 20MB</p>
+          {pdfFile && (
+            <p className="text-[#8b6f47] text-sm mt-2">Selecionado: {pdfFile.name}</p>
           )}
         </div>
 

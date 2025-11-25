@@ -56,6 +56,15 @@ public class BookController {
         return ResponseEntity.ok(updatedBook);
     }
 
+    @PostMapping("/{id}/pdf")
+    public ResponseEntity<BookResponseDTO> uploadPdf(
+            @PathVariable String id,
+            @RequestParam("file") MultipartFile file) {
+
+        BookResponseDTO updatedBook = bookService.uploadBookPdf(id, file);
+        return ResponseEntity.ok(updatedBook);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDTO> updateMyBook(
             @PathVariable String id,

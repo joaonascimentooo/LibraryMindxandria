@@ -34,4 +34,7 @@ public class Book extends Auditable {
 
     @Column(name = "cover_image_name")
     private String coverImageName;
+
+    @Column(name = "pdf_file_name")
+    private String pdfFileName;
 }

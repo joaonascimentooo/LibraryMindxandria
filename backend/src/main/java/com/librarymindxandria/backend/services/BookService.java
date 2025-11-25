@@ -92,6 +92,24 @@ public class BookService {
     }
 
     @Transactional
+    public BookResponseDTO uploadBookPdf(String bookId, MultipartFile file) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+
+        User currentUser = userService.getAuthenticatedUserEntity();
+        if (!book.getUser().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("Você não tem permissão para editar este livro.");
+        }
+
+        String filename = fileStorageService.storeFile(file);
+
+        book.setPdfFileName(filename);
+        Book updatedBook = bookRepository.save(book);
+
+        return mapBookToDTO(updatedBook);
+    }
+
+    @Transactional
     public BookResponseDTO updateMyBook(String bookId, BookUpdateRequestDTO updateRequestDTO){
 
         User currentUser = userService.getAuthenticatedUserEntity();
@@ -134,6 +152,8 @@ public class BookService {
         responseDTO.setGenreType(book.getGenreTypes());
         String imageUrl = fileStorageService.buildFileUri(book.getCoverImageName());
         responseDTO.setCoverImageUrl(imageUrl);
+        String pdfUrl = fileStorageService.buildFileUri(book.getPdfFileName());
+        responseDTO.setPdfDownloadUrl(pdfUrl);
         return responseDTO;
     }
 }

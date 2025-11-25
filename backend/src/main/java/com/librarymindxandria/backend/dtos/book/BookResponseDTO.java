@@ -15,4 +15,5 @@ public class BookResponseDTO {
     private String longDescription;
     private List<GenreType> genreType;
     private String coverImageUrl;
+    private String pdfDownloadUrl;
 }

@@ -4,6 +4,7 @@ interface BookCardProps {
   category: string;
   coverImage?: string;
   description?: string;
+  readUrl?: string;
 }
 
 export default function BookCard({ 
@@ -11,7 +12,8 @@ export default function BookCard({
   author, 
   category, 
   coverImage,
-  description 
+  description,
+  readUrl,
 }: BookCardProps) {
   return (
     <div className="bg-[#1a120a] rounded-lg overflow-hidden border border-[#4a3620] hover:border-[#c9a961] transition-all hover:transform hover:scale-105 duration-300 cursor-pointer">
@@ -42,9 +44,33 @@ export default function BookCard({
           </p>
         )}
         <div className="flex gap-2">
-          <button className="flex-1 bg-[#8b6f47] text-[#e8dcc8] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#1a1108] transition-all font-medium">
-            Ler
-          </button>
+          {readUrl ? (
+            readUrl.startsWith('/read') ? (
+              <a
+                href={readUrl}
+                className="flex-1 text-center bg-[#8b6f47] text-[#e8dcc8] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#1a1108] transition-all font-medium"
+              >
+                Ler
+              </a>
+            ) : (
+              <a
+                href={readUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 text-center bg-[#8b6f47] text-[#e8dcc8] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#1a1108] transition-all font-medium"
+              >
+                Ler
+              </a>
+            )
+          ) : (
+            <button
+              className="flex-1 bg-[#3a2e23] text-[#9b8c78] py-2 px-4 rounded-lg cursor-not-allowed"
+              title="PDF não disponível"
+              disabled
+            >
+              Ler
+            </button>
+          )}
           <button className="bg-[#4a3620] text-[#c9a961] py-2 px-4 rounded-lg hover:bg-[#8b6f47] transition-all">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

@@ -34,3 +34,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Runtime uploads (stored on disk, not source-controlled)
+uploads/
