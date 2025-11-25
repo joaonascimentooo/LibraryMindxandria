@@ -5,6 +5,7 @@ import { getMyProfile, updateProfile, deleteAccount, refreshToken, type UserResp
 import { useAuth } from "@/hooks/useAuth";
 import { getRefreshToken, setTokens } from "@/lib/auth";
 import ScrollReveal from "@/components/ScrollReveal";
+import { Edit, Trash2 } from "lucide-react";
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading, logout } = useAuth();
@@ -154,9 +155,9 @@ export default function ProfilePage() {
                     <div className="text-[#9b8c78] text-sm">{profile.email}</div>
                     <button
                       onClick={() => { setIsEditingName(true); setSuccess(null); setError(null); }}
-                      className="mt-3 bg-[#8b6f47] text-[#e8dcc8] px-4 py-1.5 rounded font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all"
+                      className="mt-3 bg-[#8b6f47] text-[#e8dcc8] px-4 py-1.5 rounded font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all flex items-center gap-2"
                     >
-                      ✏️ Editar Nome
+                      <Edit size={16} /> Editar Nome
                     </button>
                   </div>
                 )}
@@ -177,9 +178,9 @@ export default function ProfilePage() {
             {!confirmDelete ? (
               <button
                 onClick={() => { setConfirmDelete(true); setError(null); setSuccess(null); }}
-                className="bg-red-700 text-white px-4 py-2 rounded font-semibold hover:bg-red-800 transition-all"
+                className="bg-red-700 text-white px-4 py-2 rounded font-semibold hover:bg-red-800 transition-all flex items-center gap-2"
               >
-                🗑️ Excluir minha conta
+                <Trash2 size={16} /> Excluir minha conta
               </button>
             ) : (
               <div className="space-y-3">

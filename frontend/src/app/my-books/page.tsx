@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { translateGenres } from "@/lib/genres";
 import ScrollReveal from "@/components/ScrollReveal";
+import { Plus, Save, X, Edit, Trash2 } from "lucide-react";
 
 export default function MyBooksPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -113,9 +114,9 @@ export default function MyBooksPage() {
           <h1 className="text-3xl font-bold text-[#c9a961]">Meus Livros</h1>
           <Link
             href="/upload"
-            className="bg-[#c9a961] text-[#1a1108] px-6 py-2 rounded-full font-semibold hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all"
+            className="bg-[#c9a961] text-[#1a1108] px-6 py-2 rounded-full font-semibold hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all flex items-center gap-2"
           >
-            ➕ Novo Livro
+            <Plus size={18} /> Novo Livro
           </Link>
         </div>
 
@@ -184,16 +185,16 @@ export default function MyBooksPage() {
                       <button
                         onClick={() => handleSaveEdit(book.id)}
                         disabled={submitting}
-                        className="bg-[#c9a961] text-[#1a1108] px-4 py-2 rounded font-semibold hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all disabled:opacity-60"
+                        className="bg-[#c9a961] text-[#1a1108] px-4 py-2 rounded font-semibold hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all disabled:opacity-60 flex items-center gap-2"
                       >
-                        {submitting ? "Salvando..." : "✅ Salvar"}
+                        {submitting ? "Salvando..." : <><Save size={16} /> Salvar</>}
                       </button>
                       <button
                         onClick={handleCancelEdit}
                         disabled={submitting}
-                        className="bg-[#2a1e13] text-[#e8dcc8] px-4 py-2 rounded border border-[#8b6f47] hover:bg-[#3a2e23] transition-all disabled:opacity-60"
+                        className="bg-[#2a1e13] text-[#e8dcc8] px-4 py-2 rounded border border-[#8b6f47] hover:bg-[#3a2e23] transition-all disabled:opacity-60 flex items-center gap-2"
                       >
-                        ❌ Cancelar
+                        <X size={16} /> Cancelar
                       </button>
                     </div>
                   </div>
@@ -206,15 +207,15 @@ export default function MyBooksPage() {
                     <div className="flex gap-3">
                       <button
                         onClick={() => handleDelete(book.id)}
-                        className="bg-red-700 text-white px-4 py-2 rounded font-semibold hover:bg-red-800 transition-all"
+                        className="bg-red-700 text-white px-4 py-2 rounded font-semibold hover:bg-red-800 transition-all flex items-center gap-2"
                       >
-                        🗑️ Sim, excluir
+                        <Trash2 size={16} /> Sim, excluir
                       </button>
                       <button
                         onClick={() => setDeletingId(null)}
-                        className="bg-[#2a1e13] text-[#e8dcc8] px-4 py-2 rounded border border-[#8b6f47] hover:bg-[#3a2e23] transition-all"
+                        className="bg-[#2a1e13] text-[#e8dcc8] px-4 py-2 rounded border border-[#8b6f47] hover:bg-[#3a2e23] transition-all flex items-center gap-2"
                       >
-                        Cancelar
+                        <X size={16} /> Cancelar
                       </button>
                     </div>
                   </div>
@@ -237,15 +238,15 @@ export default function MyBooksPage() {
                     <div className="flex gap-3 mt-4">
                       <button
                         onClick={() => handleEdit(book)}
-                        className="bg-[#8b6f47] text-[#e8dcc8] px-4 py-2 rounded font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all"
+                        className="bg-[#8b6f47] text-[#e8dcc8] px-4 py-2 rounded font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all flex items-center gap-2"
                       >
-                        ✏️ Editar
+                        <Edit size={16} /> Editar
                       </button>
                       <button
                         onClick={() => setDeletingId(book.id)}
-                        className="bg-[#2a1e13] text-red-400 px-4 py-2 rounded border border-red-700 hover:bg-red-900/30 transition-all"
+                        className="bg-[#2a1e13] text-red-400 px-4 py-2 rounded border border-red-700 hover:bg-red-900/30 transition-all flex items-center gap-2"
                       >
-                        🗑️ Excluir
+                        <Trash2 size={16} /> Excluir
                       </button>
                     </div>
                   </div>
