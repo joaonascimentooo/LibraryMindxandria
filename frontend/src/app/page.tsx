@@ -97,7 +97,7 @@ export default function Home() {
               as="p"
               delay={0.5}
             />
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} delay={1.2} />
             
             {/* Estatísticas */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">

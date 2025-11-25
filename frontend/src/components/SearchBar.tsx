@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface SearchBarProps {
   onSearch?: (searchTerm: string) => void;
+  delay?: number;
 }
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
+export default function SearchBar({ onSearch, delay = 0 }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
@@ -17,7 +19,17 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   return (
-    <form onSubmit={handleSearch} className="w-full max-w-3xl mx-auto">
+    <motion.form 
+      onSubmit={handleSearch} 
+      className="w-full max-w-3xl mx-auto"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ 
+        duration: 0.8, 
+        delay,
+        ease: [0.25, 0.4, 0.25, 1]
+      }}
+    >
       <div className="relative">
         <input
           type="text"
@@ -35,7 +47,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           </svg>
         </button>
       </div>
-    </form>
+    </motion.form>
   );
 }
 
