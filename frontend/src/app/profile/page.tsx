@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getMyProfile, updateProfile, deleteAccount, refreshToken, type UserResponseDTO } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { getRefreshToken, setTokens } from "@/lib/auth";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading, logout } = useAuth();
@@ -112,7 +113,8 @@ export default function ProfilePage() {
           </div>
         )}
 
-        <section className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6 mb-8">
+        <ScrollReveal delay={0.1}>
+          <section className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6 mb-8">
           {!profile ? (
             <div className="animate-pulse text-[#cbbba2]">Carregando perfil...</div>
           ) : (
@@ -161,11 +163,12 @@ export default function ProfilePage() {
               </div>
             </div>
           )}
-        </section>
-
+          </section>
+        </ScrollReveal>
 
         {/* Danger Zone */}
-        <section className="mt-8">
+        <ScrollReveal delay={0.2}>
+          <section className="mt-8">
           <h2 className="text-2xl font-semibold text-red-400 mb-4">Zona de Perigo</h2>
           <div className="bg-[#1a120a] border border-red-700 rounded-lg p-6">
             <p className="text-[#e8dcc8] mb-4">
@@ -200,7 +203,8 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-        </section>
+          </section>
+        </ScrollReveal>
       </div>
     </main>
   );

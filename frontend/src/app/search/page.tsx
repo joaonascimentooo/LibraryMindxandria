@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { getAllBooks, BookResponseDTO } from '@/lib/api';
 import BookCard from '@/components/BookCard';
 import SearchBar from '@/components/SearchBar';
+import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
 import { Library } from 'lucide-react';
 
@@ -152,16 +153,17 @@ function SearchPageContent() {
           {!loading && !error && books.length > 0 && (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                {books.map((book) => (
-                  <BookCard
-                    key={book.id}
-                    title={book.name}
-                    author="Autor Desconhecido"
-                    category={book.genreType?.[0] || 'Sem categoria'}
-                    description={book.shortDescription}
-                    coverImage={book.coverImageUrl}
-                    readUrl={book.pdfDownloadUrl ? `/read?url=${encodeURIComponent(book.pdfDownloadUrl)}` : undefined}
-                  />
+                {books.map((book, index) => (
+                  <ScrollReveal key={book.id} delay={index * 0.05}>
+                    <BookCard
+                      title={book.name}
+                      author="Autor Desconhecido"
+                      category={book.genreType?.[0] || 'Sem categoria'}
+                      description={book.shortDescription}
+                      coverImage={book.coverImageUrl}
+                      readUrl={book.pdfDownloadUrl ? `/read?url=${encodeURIComponent(book.pdfDownloadUrl)}` : undefined}
+                    />
+                  </ScrollReveal>
                 ))}
               </div>
 

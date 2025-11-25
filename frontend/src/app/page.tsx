@@ -3,6 +3,7 @@
 import SearchBar from '@/components/SearchBar';
 import BookCard from '@/components/BookCard';
 import SplitText from '@/components/SplitText';
+import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -101,40 +102,49 @@ export default function Home() {
             
             {/* Estatísticas */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
-              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
-                <div className="flex justify-center mb-3">
-                  <BookOpen size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+              <ScrollReveal delay={0.1}>
+                <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                  <div className="flex justify-center mb-3">
+                    <BookOpen size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                  </div>
+                  <div className="text-3xl text-[#c9a961] font-bold mb-2">5,000+</div>
+                  <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Livros</div>
                 </div>
-                <div className="text-3xl text-[#c9a961] font-bold mb-2">5,000+</div>
-                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Livros</div>
-              </div>
-              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
-                <div className="flex justify-center mb-3">
-                  <Users size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                  <div className="flex justify-center mb-3">
+                    <Users size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                  </div>
+                  <div className="text-3xl text-[#c9a961] font-bold mb-2">2,500+</div>
+                  <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Autores</div>
                 </div>
-                <div className="text-3xl text-[#c9a961] font-bold mb-2">2,500+</div>
-                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Autores</div>
-              </div>
-              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
-                <div className="flex justify-center mb-3">
-                  <Eye size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+              </ScrollReveal>
+              <ScrollReveal delay={0.3}>
+                <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                  <div className="flex justify-center mb-3">
+                    <Eye size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                  </div>
+                  <div className="text-3xl text-[#c9a961] font-bold mb-2">10,000+</div>
+                  <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Leitores</div>
                 </div>
-                <div className="text-3xl text-[#c9a961] font-bold mb-2">10,000+</div>
-                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Leitores</div>
-              </div>
-              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
-                <div className="flex justify-center mb-3">
-                  <Gift size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+              </ScrollReveal>
+              <ScrollReveal delay={0.4}>
+                <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                  <div className="flex justify-center mb-3">
+                    <Gift size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                  </div>
+                  <div className="text-3xl text-[#c9a961] font-bold mb-2">100%</div>
+                  <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Grátis</div>
                 </div>
-                <div className="text-3xl text-[#c9a961] font-bold mb-2">100%</div>
-                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Grátis</div>
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </section>
 
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
+        <ScrollReveal>
+          <section className="py-16 px-4">
+            <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-[#c9a961] mb-8">Explorar por Categoria</h2>
             {statsLoading ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -161,13 +171,15 @@ export default function Home() {
                 })}
               </div>
             )}
-          </div>
-        </section>
+            </div>
+          </section>
+        </ScrollReveal>
 
         {/* Livros em Destaque */}
-        <section className="py-16 px-4 bg-[#2a1515]">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-[#c9a961] mb-8">Livros em Destaque</h2>
+        <ScrollReveal>
+          <section className="py-16 px-4 bg-[#2a1515]">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-3xl font-bold text-[#c9a961] mb-8">Livros em Destaque</h2>
             
             {loading && (
               <div className="text-center py-12">
@@ -214,12 +226,14 @@ export default function Home() {
                 </div>
               </>
             )}
-          </div>
-        </section>
+            </div>
+          </section>
+        </ScrollReveal>
 
         {/* Call to Action */}
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#3d1f1f] to-[#2a1515] rounded-2xl p-12 text-center border border-[#4a2525]">
+        <ScrollReveal>
+          <section className="py-20 px-4">
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#3d1f1f] to-[#2a1515] rounded-2xl p-12 text-center border border-[#4a2525]">
             <h2 className="text-4xl font-bold text-[#c9a961] mb-6">
               Compartilhe Seu Conhecimento
             </h2>
@@ -229,8 +243,9 @@ export default function Home() {
             <Link href="/upload" className="inline-block bg-[#c9a961] text-[#3d1f1f] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#d4b974] hover:text-[#3d1f1f] transition-all shadow-lg hover:shadow-xl">
               Fazer Upload Agora
             </Link>
-          </div>
-        </section>
+            </div>
+          </section>
+        </ScrollReveal>
       </main>
     </>
   );

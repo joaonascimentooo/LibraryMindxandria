@@ -5,6 +5,7 @@ import { getMyBooks, updateBook, deleteBook, type BookResponseDTO, type BookRequ
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { translateGenres } from "@/lib/genres";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function MyBooksPage() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -140,8 +141,9 @@ export default function MyBooksPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {books.map((book) => (
-              <div key={book.id} className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
+            {books.map((book, index) => (
+              <ScrollReveal key={book.id} delay={index * 0.08}>
+                <div className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
                 {editingId === book.id ? (
                   // Modo de edição
                   <div className="space-y-4">
@@ -248,7 +250,8 @@ export default function MyBooksPage() {
                     </div>
                   </div>
                 )}
-              </div>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         )}

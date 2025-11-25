@@ -5,6 +5,7 @@ import { createBook, uploadBookCover, uploadBookPdf, type BookRequestDTO } from 
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ALL_GENRES, translateGenre, type GenreType } from "@/lib/genres";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -155,7 +156,7 @@ export default function UploadPage() {
   return (
     <main className="min-h-screen bg-[#2a1515] text-[#f4e8d0]">
       <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="w-full max-w-2xl">
+        <ScrollReveal className="w-full max-w-2xl">
           <h1 className="text-3xl font-bold text-[#c9a961] mb-6 text-center">Upload de Livro</h1>
 
           <form onSubmit={handleSubmit} className="space-y-5 bg-[#3d1f1f] border border-[#5a3030] p-6 rounded-lg shadow-lg">
@@ -340,7 +341,7 @@ export default function UploadPage() {
           </button>
         </div>
         </form>
-        </div>
+        </ScrollReveal>
       </div>
     </main>
   );
