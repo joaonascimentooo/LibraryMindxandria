@@ -139,11 +139,11 @@ export default function UploadPage() {
 
   if (!isLoading && !isAuthenticated) {
     return (
-      <main className="min-h-screen bg-[#0f0a05] text-[#e8dcc8]">
+      <main className="min-h-screen bg-[#2a1515] text-[#f4e8d0]">
         <div className="min-h-screen flex items-center justify-center px-4">
           <div className="w-full max-w-xl">
             <h1 className="text-3xl font-bold text-[#c9a961] mb-4 text-center">Upload de Livro</h1>
-            <div className="bg-[#1a120a] border border-[#8b6f47] text-[#e8dcc8] p-6 rounded-lg text-center">
+            <div className="bg-[#3d1f1f] border border-[#5a3030] text-[#f4e8d0] p-6 rounded-lg text-center">
               Você precisa estar logado para fazer upload. Acesse a página de Login.
             </div>
           </div>
@@ -153,12 +153,12 @@ export default function UploadPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0f0a05] text-[#e8dcc8]">
+    <main className="min-h-screen bg-[#2a1515] text-[#f4e8d0]">
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="w-full max-w-2xl">
           <h1 className="text-3xl font-bold text-[#c9a961] mb-6 text-center">Upload de Livro</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-5 bg-[#1a120a] border border-[#8b6f47] p-6 rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit} className="space-y-5 bg-[#3d1f1f] border border-[#5a3030] p-6 rounded-lg shadow-lg">
         {error && (
           <div className="bg-red-900/30 border border-red-700 text-red-200 px-4 py-2 rounded">
             {error}
@@ -171,7 +171,7 @@ export default function UploadPage() {
         )}
 
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-[#e8dcc8] mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-[#f4e8d0] mb-1">
             Título
           </label>
           <input
@@ -180,14 +180,14 @@ export default function UploadPage() {
             type="text"
             value={form.name}
             onChange={handleChange}
-            className="w-full rounded-md bg-[#2a1e13] text-[#e8dcc8] border border-[#8b6f47] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
+            className="w-full rounded-md bg-[#4a2525] text-[#f4e8d0] border border-[#5a3030] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
             placeholder="Ex.: A Biblioteca Invisível"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#e8dcc8] mb-2">
+          <label className="block text-sm font-medium text-[#f4e8d0] mb-2">
             Capa do Livro (opcional)
           </label>
           
@@ -202,13 +202,13 @@ export default function UploadPage() {
               />
               <label
                 htmlFor="cover-upload"
-                className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-[#8b6f47] rounded-lg cursor-pointer hover:border-[#c9a961] transition-colors bg-[#2a1e13]"
+                className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-[#5a3030] rounded-lg cursor-pointer hover:border-[#c9a961] transition-colors bg-[#4a2525]"
               >
-                <svg className="w-12 h-12 text-[#8b6f47] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 text-[#5a3030] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <p className="text-[#8b6f47] text-sm">Clique para selecionar uma imagem</p>
-                <p className="text-[#6b5737] text-xs mt-1">PNG, JPG ou WEBP (máx. 5MB)</p>
+                <p className="text-[#5a3030] text-sm">Clique para selecionar uma imagem</p>
+                <p className="text-[#6b4035] text-xs mt-1">PNG, JPG ou WEBP (máx. 5MB)</p>
               </label>
             </div>
           ) : (
@@ -217,7 +217,7 @@ export default function UploadPage() {
               <img
                 src={coverPreview}
                 alt="Preview da capa"
-                className="w-full h-64 object-cover rounded-lg border-2 border-[#8b6f47]"
+                className="w-full h-64 object-cover rounded-lg border-2 border-[#5a3030]"
               />
               <button
                 type="button"
@@ -233,7 +233,7 @@ export default function UploadPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#e8dcc8] mb-2">
+          <label className="block text-sm font-medium text-[#f4e8d0] mb-2">
             Arquivo PDF (opcional)
           </label>
           <div className="flex items-center gap-3">
@@ -242,7 +242,7 @@ export default function UploadPage() {
               id="pdf-upload"
               accept="application/pdf"
               onChange={handlePdfChange}
-              className="block w-full text-sm text-[#cbbba2] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#c9a961] file:text-[#1a1108] hover:file:bg-[#8b6f47]"
+              className="block w-full text-sm text-[#f4e8d0] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#c9a961] file:text-[#1a1108] hover:file:bg-[#5a3030]"
             />
             {pdfFile && (
               <button
@@ -254,14 +254,14 @@ export default function UploadPage() {
               </button>
             )}
           </div>
-          <p className="text-[#6b5737] text-xs mt-1">Somente PDF, até 20MB</p>
+          <p className="text-[#6b4035] text-xs mt-1">Somente PDF, até 20MB</p>
           {pdfFile && (
-            <p className="text-[#8b6f47] text-sm mt-2">Selecionado: {pdfFile.name}</p>
+            <p className="text-[#5a3030] text-sm mt-2">Selecionado: {pdfFile.name}</p>
           )}
         </div>
 
         <div>
-          <label htmlFor="shortDescription" className="block text-sm font-medium text-[#e8dcc8] mb-1">
+          <label htmlFor="shortDescription" className="block text-sm font-medium text-[#f4e8d0] mb-1">
             Descrição curta
           </label>
           <input
@@ -270,13 +270,13 @@ export default function UploadPage() {
             type="text"
             value={form.shortDescription}
             onChange={handleChange}
-            className="w-full rounded-md bg-[#2a1e13] text-[#e8dcc8] border border-[#8b6f47] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
+            className="w-full rounded-md bg-[#4a2525] text-[#f4e8d0] border border-[#5a3030] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
             placeholder="Uma sinopse breve do livro"
           />
         </div>
 
         <div>
-          <label htmlFor="longDescription" className="block text-sm font-medium text-[#e8dcc8] mb-1">
+          <label htmlFor="longDescription" className="block text-sm font-medium text-[#f4e8d0] mb-1">
             Descrição longa
           </label>
           <textarea
@@ -285,16 +285,16 @@ export default function UploadPage() {
             value={form.longDescription}
             onChange={handleChange}
             rows={6}
-            className="w-full rounded-md bg-[#2a1e13] text-[#e8dcc8] border border-[#8b6f47] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
+            className="w-full rounded-md bg-[#4a2525] text-[#f4e8d0] border border-[#5a3030] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
             placeholder="Conte mais detalhes sobre o livro"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#e8dcc8] mb-2">
+          <label className="block text-sm font-medium text-[#f4e8d0] mb-2">
             Gêneros ({form.genreType?.length || 0} selecionado{(form.genreType?.length || 0) !== 1 ? 's' : ''})
           </label>
-          <div className="max-h-64 overflow-y-auto bg-[#2a1e13] border border-[#8b6f47] rounded-md p-3">
+          <div className="max-h-64 overflow-y-auto bg-[#4a2525] border border-[#5a3030] rounded-md p-3">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {ALL_GENRES.map((genre) => {
                 const isSelected = form.genreType?.includes(genre);
@@ -307,7 +307,7 @@ export default function UploadPage() {
                       px-3 py-1.5 rounded-md text-sm font-medium transition-all
                       ${isSelected 
                         ? 'bg-[#c9a961] text-[#1a1108] border-2 border-[#c9a961]' 
-                        : 'bg-[#1a120a] text-[#cbbba2] border border-[#8b6f47] hover:border-[#c9a961]'
+                        : 'bg-[#3d1f1f] text-[#f4e8d0] border border-[#5a3030] hover:border-[#c9a961]'
                       }
                     `}
                   >
@@ -323,7 +323,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="bg-[#c9a961] text-[#1a1108] px-6 py-2 rounded-full font-semibold hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            className="bg-[#c9a961] text-[#1a1108] px-6 py-2 rounded-full font-semibold hover:bg-[#5a3030] hover:text-[#f4e8d0] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {submitting ? "Enviando..." : "Salvar"}
           </button>
@@ -334,7 +334,7 @@ export default function UploadPage() {
               setCoverImage(null);
               setCoverPreview(null);
             }}
-            className="text-[#e8dcc8] hover:text-[#c9a961] transition-colors"
+            className="text-[#f4e8d0] hover:text-[#c9a961] transition-colors"
           >
             Limpar
           </button>
@@ -345,3 +345,4 @@ export default function UploadPage() {
     </main>
   );
 }
+
