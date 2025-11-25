@@ -2,6 +2,7 @@
 
 import SearchBar from '@/components/SearchBar';
 import BookCard from '@/components/BookCard';
+import SplitText from '@/components/SplitText';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -85,12 +86,17 @@ export default function Home() {
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-[#3d1f1f] to-[#2a1515] py-20 px-4">
           <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-[#c9a961] mb-6">
-              Bem-vindo à LibraryMindxandria
-            </h1>
-            <p className="text-xl text-[#f4e8d0] mb-12 max-w-3xl mx-auto">
-              Descubra milhares de livros, faça upload de suas obras e compartilhe conhecimento com o mundo
-            </p>
+            <SplitText 
+              text="Bem-vindo à LibraryMindxandria"
+              className="text-5xl md:text-6xl font-bold text-[#c9a961] mb-6"
+              as="h1"
+            />
+            <SplitText 
+              text="Descubra milhares de livros, faça upload de suas obras e compartilhe conhecimento com o mundo"
+              className="text-xl text-[#f4e8d0] mb-12 max-w-3xl mx-auto"
+              as="p"
+              delay={0.5}
+            />
             <SearchBar onSearch={handleSearch} />
             
             {/* Estatísticas */}
