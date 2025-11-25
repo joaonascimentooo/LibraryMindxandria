@@ -6,6 +6,7 @@ import { getAllBooks, BookResponseDTO } from '@/lib/api';
 import BookCard from '@/components/BookCard';
 import SearchBar from '@/components/SearchBar';
 import Link from 'next/link';
+import { Library } from 'lucide-react';
 
 export default function SearchPage() {
   return (
@@ -71,11 +72,11 @@ function SearchPageContent() {
   return (
     <main className="min-h-screen">
       {/* Header de Busca */}
-      <section className="bg-gradient-to-b from-[#1a120a] to-[#0f0a05] py-12 px-4">
+      <section className="bg-gradient-to-b from-[#3d1f1f] to-[#2a1515] py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <Link 
             href="/" 
-            className="inline-flex items-center text-[#c9a961] hover:text-[#e8dcc8] mb-6 transition-colors"
+            className="inline-flex items-center text-[#c9a961] hover:text-[#f4e8d0] mb-6 transition-colors"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -94,7 +95,7 @@ function SearchPageContent() {
         <div className="max-w-7xl mx-auto">
           {/* Informações dos Resultados */}
           {!loading && !error && (
-            <div className="mb-6 text-[#8b6f47]">
+            <div className="mb-6 text-[#6b4035]">
               {totalElements > 0 ? (
                 <p>
                   Encontrados <span className="text-[#c9a961] font-semibold">{totalElements}</span> livro{totalElements !== 1 ? 's' : ''}
@@ -109,7 +110,7 @@ function SearchPageContent() {
           {/* Loading */}
           {loading && (
             <div className="text-center py-20">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#8b6f47] border-t-[#c9a961]"></div>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#4a2525] border-t-[#c9a961]"></div>
               <p className="text-[#c9a961] text-xl mt-4">Carregando livros...</p>
             </div>
           )}
@@ -129,18 +130,18 @@ function SearchPageContent() {
           {/* Resultados Vazios */}
           {!loading && !error && books.length === 0 && (
             <div className="text-center py-20">
-              <div className="text-6xl mb-4">📚</div>
+              <Library size={64} className="text-[#6b4035] mx-auto mb-4" />
               <h2 className="text-2xl text-[#c9a961] font-bold mb-2">
                 Nenhum livro encontrado
               </h2>
-              <p className="text-[#8b6f47] mb-6">
+              <p className="text-[#6b4035] mb-6">
                 {searchTerm 
                   ? 'Tente buscar com outros termos' 
                   : 'Ainda não há livros cadastrados no sistema'}
               </p>
               <Link 
                 href="/upload" 
-                className="inline-block bg-[#c9a961] text-[#1a1108] px-6 py-3 rounded-full font-semibold hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all"
+                className="inline-block bg-[#c9a961] text-[#3d1f1f] px-6 py-3 rounded-full font-semibold hover:bg-[#d4b974] hover:text-[#3d1f1f] transition-all shadow-lg"
               >
                 Seja o primeiro a cadastrar
               </Link>
@@ -170,13 +171,13 @@ function SearchPageContent() {
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 0}
-                    className="bg-[#8b6f47] text-[#e8dcc8] px-6 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#8b6f47] disabled:hover:text-[#e8dcc8] min-w-[120px]"
+                    className="bg-[#4a2525] text-[#f4e8d0] px-6 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#3d1f1f] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4a2525] disabled:hover:text-[#f4e8d0] min-w-[120px]"
                   >
                     ← Anterior
                   </button>
                   
                   <div className="flex items-center gap-2">
-                    <span className="text-[#e8dcc8] font-semibold">
+                    <span className="text-[#f4e8d0] font-semibold">
                       Página {currentPage + 1} de {totalPages}
                     </span>
                   </div>
@@ -184,7 +185,7 @@ function SearchPageContent() {
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages - 1}
-                    className="bg-[#8b6f47] text-[#e8dcc8] px-6 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#8b6f47] disabled:hover:text-[#e8dcc8] min-w-[120px]"
+                    className="bg-[#4a2525] text-[#f4e8d0] px-6 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#3d1f1f] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#4a2525] disabled:hover:text-[#f4e8d0] min-w-[120px]"
                   >
                     Próxima →
                   </button>
@@ -197,3 +198,4 @@ function SearchPageContent() {
     </main>
   );
 }
+

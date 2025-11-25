@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAllBooks, BookResponseDTO, getGenreStats, GenreStatDTO } from '@/lib/api';
 import { GenreType, translateGenre } from '@/lib/genres';
+import { Heart, Sparkles, Landmark, Microscope, Brain, Search as SearchIcon, Zap, Ghost, Laugh, PenTool, Drama, Sword, Compass, Rocket, Library, BookOpen, Users, Eye, Gift } from 'lucide-react';
 
 export default function Home() {
   const router = useRouter();
@@ -61,54 +62,66 @@ export default function Home() {
     }
   };
 
-  const GENRE_ICONS: Partial<Record<GenreType, string>> = {
-    ROMANCE: '💕',
-    FANTASY: '🐉',
-    HISTORY: '🏛️',
-    SCIENCE: '🔬',
-    PHILOSOPHY: '🤔',
-    MYSTERY: '🕵️',
-    THRILLER: '⚡',
-    HORROR: '👻',
-    COMEDY: '🎭',
-    POETRY: '📝',
-    DRAMA: '🎬',
-    ACTION: '�️',
-    ADVENTURE: '🧭',
-    SCIENCE_FICTION: '🚀',
+  const GENRE_ICONS: Partial<Record<GenreType, React.ReactNode>> = {
+    ROMANCE: <Heart size={32} className="mx-auto" />,
+    FANTASY: <Sparkles size={32} className="mx-auto" />,
+    HISTORY: <Landmark size={32} className="mx-auto" />,
+    SCIENCE: <Microscope size={32} className="mx-auto" />,
+    PHILOSOPHY: <Brain size={32} className="mx-auto" />,
+    MYSTERY: <SearchIcon size={32} className="mx-auto" />,
+    THRILLER: <Zap size={32} className="mx-auto" />,
+    HORROR: <Ghost size={32} className="mx-auto" />,
+    COMEDY: <Laugh size={32} className="mx-auto" />,
+    POETRY: <PenTool size={32} className="mx-auto" />,
+    DRAMA: <Drama size={32} className="mx-auto" />,
+    ACTION: <Sword size={32} className="mx-auto" />,
+    ADVENTURE: <Compass size={32} className="mx-auto" />,
+    SCIENCE_FICTION: <Rocket size={32} className="mx-auto" />,
   };
 
   return (
     <>
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-[#1a120a] to-[#0f0a05] py-20 px-4">
+        <section className="bg-gradient-to-b from-[#3d1f1f] to-[#2a1515] py-20 px-4">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-[#c9a961] mb-6">
               Bem-vindo à LibraryMindxandria
             </h1>
-            <p className="text-xl text-[#e8dcc8] mb-12 max-w-3xl mx-auto">
+            <p className="text-xl text-[#f4e8d0] mb-12 max-w-3xl mx-auto">
               Descubra milhares de livros, faça upload de suas obras e compartilhe conhecimento com o mundo
             </p>
             <SearchBar onSearch={handleSearch} />
             
             {/* Estatísticas */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
-              <div className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
+              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                <div className="flex justify-center mb-3">
+                  <BookOpen size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                </div>
                 <div className="text-3xl text-[#c9a961] font-bold mb-2">5,000+</div>
-                <div className="text-[#8b6f47]">Livros</div>
+                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Livros</div>
               </div>
-              <div className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
+              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                <div className="flex justify-center mb-3">
+                  <Users size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                </div>
                 <div className="text-3xl text-[#c9a961] font-bold mb-2">2,500+</div>
-                <div className="text-[#8b6f47]">Autores</div>
+                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Autores</div>
               </div>
-              <div className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
+              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                <div className="flex justify-center mb-3">
+                  <Eye size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                </div>
                 <div className="text-3xl text-[#c9a961] font-bold mb-2">10,000+</div>
-                <div className="text-[#8b6f47]">Leitores</div>
+                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Leitores</div>
               </div>
-              <div className="bg-[#1a120a] border border-[#8b6f47] rounded-lg p-6">
+              <div className="group bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 transition-all duration-300 hover:border-[#c9a961] hover:shadow-lg hover:shadow-[#c9a961]/20 hover:-translate-y-1 cursor-default">
+                <div className="flex justify-center mb-3">
+                  <Gift size={32} className="text-[#6b4035] group-hover:text-[#c9a961] transition-colors" />
+                </div>
                 <div className="text-3xl text-[#c9a961] font-bold mb-2">100%</div>
-                <div className="text-[#8b6f47]">Grátis</div>
+                <div className="text-[#6b4035] group-hover:text-[#f4e8d0] transition-colors">Grátis</div>
               </div>
             </div>
           </div>
@@ -120,23 +133,23 @@ export default function Home() {
             {statsLoading ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="bg-[#1a120a] border border-[#4a3620] rounded-lg p-6 animate-pulse h-[140px]" />
+                  <div key={i} className="bg-[#3d1f1f] border border-[#4a2525] rounded-lg p-6 animate-pulse h-[140px]" />
                 ))}
               </div>
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {genreStats.map((g) => {
-                  const icon = GENRE_ICONS[g.genre] ?? '📚';
+                  const icon = GENRE_ICONS[g.genre] ?? <Library size={32} className="mx-auto" />;
                   return (
                     <button
                       key={g.genre}
-                      className="bg-[#1a120a] border border-[#4a3620] hover:border-[#c9a961] rounded-lg p-6 text-center transition-all hover:transform hover:scale-105 duration-300"
+                      className="bg-[#3d1f1f] border border-[#4a2525] hover:border-[#c9a961] rounded-lg p-6 text-center transition-all hover:transform hover:scale-105 duration-300"
                       // In the future we could route to a filtered search by genre
                       onClick={() => router.push('/search')}
                     >
-                      <div className="text-4xl mb-3">{icon}</div>
-                      <div className="text-[#e8dcc8] font-semibold mb-1">{translateGenre(g.genre)}</div>
-                      <div className="text-[#8b6f47] text-sm">{g.count} {g.count === 1 ? 'livro' : 'livros'}</div>
+                      <div className="text-[#c9a961] mb-3">{icon}</div>
+                      <div className="text-[#f4e8d0] font-semibold mb-1">{translateGenre(g.genre)}</div>
+                      <div className="text-[#6b4035] text-sm">{g.count} {g.count === 1 ? 'livro' : 'livros'}</div>
                     </button>
                   );
                 })}
@@ -146,13 +159,13 @@ export default function Home() {
         </section>
 
         {/* Livros em Destaque */}
-        <section className="py-16 px-4 bg-[#0f0a05]">
+        <section className="py-16 px-4 bg-[#2a1515]">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-[#c9a961] mb-8">Livros em Destaque</h2>
             
             {loading && (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#8b6f47] border-t-[#c9a961]"></div>
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#4a2525] border-t-[#c9a961]"></div>
                 <p className="text-[#c9a961] text-xl mt-4">Carregando livros...</p>
               </div>
             )}
@@ -165,7 +178,7 @@ export default function Home() {
             
             {!loading && !error && books.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[#8b6f47] text-xl">Nenhum livro disponível</div>
+                <div className="text-[#6b4035] text-xl">Nenhum livro disponível</div>
               </div>
             )}
             
@@ -188,7 +201,7 @@ export default function Home() {
                 <div className="text-center mt-12">
                   <Link 
                     href="/search"
-                    className="inline-block bg-[#8b6f47] text-[#e8dcc8] px-8 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#1a1108] transition-all"
+                    className="inline-block bg-[#4a2525] text-[#f4e8d0] px-8 py-3 rounded-full font-semibold hover:bg-[#c9a961] hover:text-[#3d1f1f] transition-all"
                   >
                     Ver Todos os Livros
                   </Link>
@@ -200,14 +213,14 @@ export default function Home() {
 
         {/* Call to Action */}
         <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#1a120a] to-[#2d1f0e] rounded-2xl p-12 text-center border border-[#8b6f47]">
+          <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#3d1f1f] to-[#2a1515] rounded-2xl p-12 text-center border border-[#4a2525]">
             <h2 className="text-4xl font-bold text-[#c9a961] mb-6">
               Compartilhe Seu Conhecimento
             </h2>
-            <p className="text-xl text-[#e8dcc8] mb-8">
+            <p className="text-xl text-[#f4e8d0] mb-8">
               Faça upload dos seus livros e ajude a construir a maior biblioteca digital do Brasil
             </p>
-            <Link href="/upload" className="inline-block bg-[#c9a961] text-[#1a1108] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#8b6f47] hover:text-[#e8dcc8] transition-all">
+            <Link href="/upload" className="inline-block bg-[#c9a961] text-[#3d1f1f] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#d4b974] hover:text-[#3d1f1f] transition-all shadow-lg hover:shadow-xl">
               Fazer Upload Agora
             </Link>
           </div>
@@ -216,3 +229,4 @@ export default function Home() {
     </>
   );
 }
+

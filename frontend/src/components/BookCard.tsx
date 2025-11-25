@@ -1,3 +1,5 @@
+import { BookOpen } from 'lucide-react';
+
 interface BookCardProps {
   title: string;
   author: string;
@@ -16,16 +18,16 @@ export default function BookCard({
   readUrl,
 }: BookCardProps) {
   return (
-    <div className="bg-[#1a120a] rounded-lg overflow-hidden border border-[#4a3620] hover:border-[#c9a961] transition-all hover:transform hover:scale-105 duration-300 cursor-pointer">
+    <div className="bg-[#3d1f1f] rounded-lg overflow-hidden border border-[#4a2525] hover:border-[#c9a961] transition-all hover:transform hover:scale-105 duration-300 cursor-pointer">
       {/* Imagem da capa */}
-      <div className="h-64 bg-[#2d1f0e] flex items-center justify-center relative overflow-hidden">
+      <div className="h-64 bg-[#4a2525] flex items-center justify-center relative overflow-hidden">
         {coverImage ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={coverImage} alt={title} className="w-full h-full object-cover" />
         ) : (
-          <div className="text-6xl">📖</div>
+          <BookOpen size={64} className="text-[#6b4035]" />
         )}
-        <div className="absolute top-2 right-2 bg-[#c9a961] text-[#1a1108] px-3 py-1 rounded-full text-sm font-semibold">
+        <div className="absolute top-2 right-2 bg-[#c9a961] text-[#3d1f1f] px-3 py-1 rounded-full text-sm font-semibold">
           {category}
         </div>
       </div>
@@ -35,11 +37,11 @@ export default function BookCard({
         <h3 className="text-[#c9a961] font-bold text-lg mb-2 line-clamp-2">
           {title}
         </h3>
-        <p className="text-[#8b6f47] text-sm mb-3">
+        <p className="text-[#6b4035] text-sm mb-3">
           por {author}
         </p>
         {description && (
-          <p className="text-[#e8dcc8] text-sm line-clamp-3 mb-4">
+          <p className="text-[#f4e8d0] text-sm line-clamp-3 mb-4">
             {description}
           </p>
         )}
@@ -48,7 +50,7 @@ export default function BookCard({
             readUrl.startsWith('/read') ? (
               <a
                 href={readUrl}
-                className="flex-1 text-center bg-[#8b6f47] text-[#e8dcc8] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#1a1108] transition-all font-medium"
+                className="flex-1 text-center bg-[#4a2525] text-[#f4e8d0] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#3d1f1f] transition-all font-medium"
               >
                 Ler
               </a>
@@ -57,21 +59,21 @@ export default function BookCard({
                 href={readUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center bg-[#8b6f47] text-[#e8dcc8] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#1a1108] transition-all font-medium"
+                className="flex-1 text-center bg-[#4a2525] text-[#f4e8d0] py-2 px-4 rounded-lg hover:bg-[#c9a961] hover:text-[#3d1f1f] transition-all font-medium"
               >
                 Ler
               </a>
             )
           ) : (
             <button
-              className="flex-1 bg-[#3a2e23] text-[#9b8c78] py-2 px-4 rounded-lg cursor-not-allowed"
+              className="flex-1 bg-[#2a1515] text-[#4a2525] py-2 px-4 rounded-lg cursor-not-allowed"
               title="PDF não disponível"
               disabled
             >
               Ler
             </button>
           )}
-          <button className="bg-[#4a3620] text-[#c9a961] py-2 px-4 rounded-lg hover:bg-[#8b6f47] transition-all">
+          <button className="bg-[#4a2525] text-[#c9a961] py-2 px-4 rounded-lg hover:bg-[#6b4035] transition-all">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
@@ -81,3 +83,4 @@ export default function BookCard({
     </div>
   );
 }
+
