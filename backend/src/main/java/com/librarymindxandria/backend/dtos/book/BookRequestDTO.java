@@ -16,4 +16,6 @@ public class BookRequestDTO {
     private String shortDescription;
     private String longDescription;
     private List<GenreType> genreType;
+    @NotBlank
+    private String author;
 }

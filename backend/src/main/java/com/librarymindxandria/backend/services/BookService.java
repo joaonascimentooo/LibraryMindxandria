@@ -64,6 +64,7 @@ public class BookService {
         newBook.setShortDescription(requestDTO.getShortDescription());
         newBook.setLongDescription(requestDTO.getLongDescription());
         newBook.setGenreTypes(requestDTO.getGenreType());
+        newBook.setAuthor(requestDTO.getAuthor());
         newBook.setCreatedAt(LocalDateTime.now());
         newBook.setUser(user);
 
@@ -122,6 +123,8 @@ public class BookService {
 
         Optional.ofNullable(updateRequestDTO.getName())
                 .ifPresent(bookToUpdate::setName);
+        Optional.ofNullable(updateRequestDTO.getAuthor())
+                .ifPresent(bookToUpdate::setAuthor);
             Optional.ofNullable(updateRequestDTO.getLongDescription())
                 .ifPresent(bookToUpdate::setLongDescription);
         Optional.ofNullable(updateRequestDTO.getShortDescription())
@@ -147,6 +150,7 @@ public class BookService {
         BookResponseDTO responseDTO = new BookResponseDTO();
         responseDTO.setId(book.getId());
         responseDTO.setName(book.getName());
+        responseDTO.setAuthor(book.getAuthor());
         responseDTO.setShortDescription(book.getShortDescription());
         responseDTO.setLongDescription(book.getLongDescription());
         responseDTO.setGenreType(book.getGenreTypes());

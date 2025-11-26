@@ -22,6 +22,14 @@ public class Book extends Auditable {
     @Column(name = "long_description", length = 3000)
     private String longDescription;
 
+    @Column(name = "cover_image_name")
+    private String coverImageName;
+
+    @Column(name = "pdf_file_name")
+    private String pdfFileName;
+
+    private String author;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -31,10 +39,4 @@ public class Book extends Auditable {
     @CollectionTable(name = "book_genre_types", joinColumns = @JoinColumn(name = "book_id"))
     @Column(name = "genre_type")
     private List<GenreType> genreTypes;
-
-    @Column(name = "cover_image_name")
-    private String coverImageName;
-
-    @Column(name = "pdf_file_name")
-    private String pdfFileName;
 }

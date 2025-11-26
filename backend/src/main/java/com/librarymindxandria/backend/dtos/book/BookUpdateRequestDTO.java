@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class BookUpdateRequestDTO {
     private String name;
+    private String author;
     private String shortDescription;
     private String longDescription;
 }
