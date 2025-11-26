@@ -13,6 +13,7 @@ export default function UploadPage() {
 
   const [form, setForm] = useState<BookRequestDTO>({
     name: "",
+    author: "",
     shortDescription: "",
     longDescription: "",
     genreType: [],
@@ -103,6 +104,10 @@ export default function UploadPage() {
       setError("O título é obrigatório.");
       return;
     }
+    if (!form.author.trim()) {
+      setError("O autor é obrigatório.");
+      return;
+    }
     if (!isAuthenticated) {
       setError("Você precisa estar logado para fazer upload.");
       return;
@@ -127,7 +132,7 @@ export default function UploadPage() {
       setTimeout(() => router.push("/my-books"), 1500);
       
       // Limpar formulário
-      setForm({ name: "", shortDescription: "", longDescription: "", genreType: [] });
+      setForm({ name: "", author: "", shortDescription: "", longDescription: "", genreType: [] });
       setCoverImage(null);
       setCoverPreview(null);
     } catch (err: unknown) {
@@ -183,6 +188,22 @@ export default function UploadPage() {
             onChange={handleChange}
             className="w-full rounded-md bg-[#4a2525] text-[#f4e8d0] border border-[#5a3030] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
             placeholder="Ex.: A Biblioteca Invisível"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="author" className="block text-sm font-medium text-[#f4e8d0] mb-1">
+            Autor
+          </label>
+          <input
+            id="author"
+            name="author"
+            type="text"
+            value={form.author}
+            onChange={handleChange}
+            className="w-full rounded-md bg-[#4a2525] text-[#f4e8d0] border border-[#5a3030] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
+            placeholder="Ex.: João Silva"
             required
           />
         </div>
@@ -331,7 +352,7 @@ export default function UploadPage() {
           <button
             type="button"
             onClick={() => {
-              setForm({ name: "", shortDescription: "", longDescription: "", genreType: [] });
+              setForm({ name: "", author: "", shortDescription: "", longDescription: "", genreType: [] });
               setCoverImage(null);
               setCoverPreview(null);
             }}

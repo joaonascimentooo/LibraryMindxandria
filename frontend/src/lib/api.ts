@@ -17,6 +17,7 @@ export type UserResponseDTO = {
 // Books
 export type BookRequestDTO = {
   name: string;
+  author: string;
   shortDescription: string;
   longDescription: string;
   genreType?: GenreType[];
@@ -25,6 +26,7 @@ export type BookRequestDTO = {
 export type BookResponseDTO = {
   id: string;
   name: string;
+  author: string;
   shortDescription: string;
   longDescription: string;
   genreType?: GenreType[];

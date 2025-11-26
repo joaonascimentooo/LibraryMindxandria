@@ -207,7 +207,7 @@ export default function Home() {
                     <BookCard 
                       key={book.id} 
                       title={book.name}
-                      author="Autor Desconhecido"
+                      author={book.author || "Autor Desconhecido"}
                       category={book.genreType?.[0] || 'Sem categoria'}
                       description={book.shortDescription}
                       coverImage={book.coverImageUrl}

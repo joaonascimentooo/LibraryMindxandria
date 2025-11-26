@@ -18,6 +18,7 @@ export default function MyBooksPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<BookRequestDTO>({
     name: "",
+    author: "",
     shortDescription: "",
     longDescription: "",
   });
@@ -49,6 +50,7 @@ export default function MyBooksPage() {
     setEditingId(book.id);
     setEditForm({
       name: book.name,
+      author: book.author,
       shortDescription: book.shortDescription,
       longDescription: book.longDescription,
     });
@@ -57,7 +59,7 @@ export default function MyBooksPage() {
 
   const handleCancelEdit = () => {
     setEditingId(null);
-    setEditForm({ name: "", shortDescription: "", longDescription: "" });
+    setEditForm({ name: "", author: "", shortDescription: "", longDescription: "" });
     setError(null);
   };
 
@@ -73,7 +75,7 @@ export default function MyBooksPage() {
       const updated = await updateBook(id, editForm);
       setBooks((prev) => prev.map((b) => (b.id === id ? updated : b)));
       setEditingId(null);
-      setEditForm({ name: "", shortDescription: "", longDescription: "" });
+      setEditForm({ name: "", author: "", shortDescription: "", longDescription: "" });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
       setError(message);
@@ -161,6 +163,17 @@ export default function MyBooksPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-[#e8dcc8] mb-1">
+                        Autor
+                      </label>
+                      <input
+                        type="text"
+                        value={editForm.author}
+                        onChange={(e) => setEditForm({ ...editForm, author: e.target.value })}
+                        className="w-full rounded-md bg-[#2a1e13] text-[#e8dcc8] border border-[#8b6f47] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#c9a961]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-[#e8dcc8] mb-1">
                         Descrição curta
                       </label>
                       <input
@@ -223,6 +236,11 @@ export default function MyBooksPage() {
                   // Modo de visualização
                   <div>
                     <h2 className="text-xl font-bold text-[#c9a961] mb-2">{book.name}</h2>
+                    {book.author && (
+                      <p className="text-[#6b4035] text-sm mb-3">
+                        por {book.author}
+                      </p>
+                    )}
                     {book.genreType && book.genreType.length > 0 && (
                       <div className="mb-3">
                         <span className="text-xs text-[#9b8c78] font-medium uppercase tracking-wide">Gêneros: </span>

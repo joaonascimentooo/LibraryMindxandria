@@ -157,7 +157,7 @@ function SearchPageContent() {
                   <ScrollReveal key={book.id} delay={index * 0.05}>
                     <BookCard
                       title={book.name}
-                      author="Autor Desconhecido"
+                      author={book.author || "Autor Desconhecido"}
                       category={book.genreType?.[0] || 'Sem categoria'}
                       description={book.shortDescription}
                       coverImage={book.coverImageUrl}
