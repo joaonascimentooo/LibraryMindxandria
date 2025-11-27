@@ -1,20 +1,16 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
-
-// Configure worker
-if (typeof window !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
-}
+import dynamic from 'next/dynamic';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 interface PDFViewerProps {
   url: string;
 }
 
-export default function PDFViewer({ url }: PDFViewerProps) {
+function PDFViewerComponent({ url }: PDFViewerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [pdf, setPdf] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+  const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -27,6 +23,16 @@ export default function PDFViewer({ url }: PDFViewerProps) {
       try {
         setLoading(true);
         setError(null);
+        
+        const pdfjsLib = await import('pdfjs-dist');
+        
+        if (typeof window !== 'undefined') {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+            'pdfjs-dist/build/pdf.worker.min.mjs',
+            import.meta.url
+          ).toString();
+        }
+        
         const loadingTask = pdfjsLib.getDocument(url);
         const pdfDoc = await loadingTask.promise;
         setPdf(pdfDoc);
@@ -58,10 +64,10 @@ export default function PDFViewer({ url }: PDFViewerProps) {
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 
-        // @ts-expect-error - pdfjs-dist types are incomplete
         await page.render({
           canvasContext: context,
           viewport: viewport,
+          canvas: canvas,
         }).promise;
       } catch (err) {
         console.error('Error rendering page:', err);
@@ -171,3 +177,12 @@ export default function PDFViewer({ url }: PDFViewerProps) {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(PDFViewerComponent), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen bg-[#2a1515] flex items-center justify-center">
+      <div className="text-[#c9a961] text-xl">Carregando visualizador...</div>
+    </div>
+  ),
+});
