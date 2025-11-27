@@ -62,6 +62,12 @@ export default function Header() {
             >
               Upload
             </Link>
+            <Link 
+              href="/upload/bulk" 
+              className="text-[#f4e8d0] hover:bg-[#4a2525] px-3 py-2 rounded-md transition-colors text-sm font-medium"
+            >
+              Upload em Lote
+            </Link>
 
             <div className="w-px h-6 bg-[#c9a961] mx-2"></div>
             <div className="w-px h-6 bg-[#b5a642] mx-2"></div>
@@ -164,6 +170,13 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Upload
+            </Link>
+            <Link 
+              href="/upload/bulk" 
+              className="block text-[#e8dcc8] hover:text-[#c9a961] transition-colors font-medium py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Upload em Lote
             </Link>
 
             {/* Mobile Auth Section */}

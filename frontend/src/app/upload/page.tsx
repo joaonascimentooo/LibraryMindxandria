@@ -77,9 +77,8 @@ export default function UploadPage() {
   const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // 20MB limit for PDFs
-      if (file.size > 20 * 1024 * 1024) {
-        setError("O PDF deve ter no máximo 20MB");
+      if (file.size > 100 * 1024 * 1024) {
+        setError("O PDF deve ter no máximo 100MB");
         return;
       }
       if (file.type !== 'application/pdf') {
